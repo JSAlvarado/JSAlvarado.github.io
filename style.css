@@ -192,6 +192,7 @@ figcaption { font-size: .84rem; color: var(--muted); margin-top: 10px; line-heig
   box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
 }
 .contact h2 { margin-bottom: .6em; }
+.resume-btn { margin-top: 12px; }
 .email-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 28px; }
 .email {
   font-size: clamp(1.05rem, 2.6vw, 1.4rem); font-weight: 700; letter-spacing: -.01em;
