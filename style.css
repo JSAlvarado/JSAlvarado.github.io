@@ -121,13 +121,7 @@ figcaption { font-size: .88rem; color: var(--muted); margin-top: 8px; }
 .ai-note { border-left: 4px solid var(--accent); background: var(--surface); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 20px; margin: 0 0 32px; }
 
 /* ============ ABOUT ============ */
-.about { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: start; }
-.about p { margin-top: 0; }
-.about-facts { margin: 0; background: var(--surface); border-radius: var(--radius); padding: 8px 22px; }
-.about-facts div { padding: 12px 0; border-bottom: 1px solid var(--line); }
-.about-facts div:last-child { border-bottom: 0; }
-.about-facts dt { font-size: .85rem; color: var(--muted); }
-.about-facts dd { margin: 0; font-weight: 600; }
+.about p { margin-top: 0; max-width: 75ch; }
 
 /* ============ SKILLS ============ */
 .skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
@@ -178,7 +172,7 @@ figcaption { font-size: .88rem; color: var(--muted); margin-top: 8px; }
 
 /* ============ RESPONSIVE ============ */
 @media (max-width: 900px) {
-  .project, .contact, .about { grid-template-columns: 1fr; }
+  .project, .contact { grid-template-columns: 1fr; }
   .mini-projects, .edu, .gallery-4, .hero .facts { grid-template-columns: 1fr 1fr; }
   .skills { grid-template-columns: 1fr 1fr; }
   .timeline { grid-template-columns: 1fr; }
