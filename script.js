@@ -31,7 +31,15 @@ const navObserver = new IntersectionObserver(
 );
 sections.forEach((s) => navObserver.observe(s));
 
-// ---- Fade sections in as you scroll to them ----
+// ---- Reveal each block on its own as it scrolls into view ----
+// Browsers with scroll-linked CSS animation do the motion in CSS; the observers below are only the fallback
+const scrollLinked = window.CSS && CSS.supports("animation-timeline: view()");
+const revealTargets = document.querySelectorAll([
+  "main section:not(.contact) h2", ".about p", ".job", ".kicker", ".project",
+  ".awards > .award", ".project-block > .gallery > figure", ".mini-projects > .card",
+  ".skills > div", ".edu > .card", ".two-col > div", "#recognition .gallery > figure",
+  "#goals > .lede", ".timeline > li", ".contact > div"
+].join(", "));
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -41,11 +49,28 @@ const revealObserver = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.08 }
+  { threshold: 0, rootMargin: "0px 0px -8% 0px" }
 );
-sections.forEach((s) => {
-  s.classList.add("reveal");
-  revealObserver.observe(s);
+revealTargets.forEach((el) => {
+  el.classList.add("reveal");
+  if (!scrollLinked) revealObserver.observe(el);
+});
+
+// ---- Photos start gray and fill with color as they come into view ----
+const toneObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+        toneObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.35 }
+);
+document.querySelectorAll(".gallery img, .project-photo img").forEach((img) => {
+  img.classList.add("tone");
+  if (!scrollLinked) toneObserver.observe(img);
 });
 
 // ---- Copy email button ----
