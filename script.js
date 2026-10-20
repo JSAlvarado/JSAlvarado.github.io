@@ -5,12 +5,14 @@ const links = document.getElementById("nav-links");
 toggle.addEventListener("click", () => {
   const open = links.classList.toggle("open");
   toggle.setAttribute("aria-expanded", open);
+  toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
 });
 // Close the menu after picking a section
 links.querySelectorAll("a").forEach((a) =>
   a.addEventListener("click", () => {
     links.classList.remove("open");
     toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Open menu");
   })
 );
 
@@ -66,14 +68,32 @@ lightbox.innerHTML = '<img alt="">';
 document.body.appendChild(lightbox);
 const lightboxImg = lightbox.querySelector("img");
 
+let lastFocused = null;
+function openLightbox(img) {
+  lastFocused = img;
+  lightboxImg.src = img.src;
+  lightboxImg.alt = img.alt;
+  lightbox.classList.add("open");
+}
+function closeLightbox() {
+  if (!lightbox.classList.contains("open")) return;
+  lightbox.classList.remove("open");
+  if (lastFocused) lastFocused.focus();
+}
+
+// Photos open with a click, or with Enter/Space for keyboard users
 document.querySelectorAll(".gallery img, .project-photo img").forEach((img) => {
-  img.addEventListener("click", () => {
-    lightboxImg.src = img.src;
-    lightboxImg.alt = img.alt;
-    lightbox.classList.add("open");
+  img.tabIndex = 0;
+  img.setAttribute("role", "button");
+  img.addEventListener("click", () => openLightbox(img));
+  img.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openLightbox(img);
+    }
   });
 });
-lightbox.addEventListener("click", () => lightbox.classList.remove("open"));
+lightbox.addEventListener("click", closeLightbox);
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") lightbox.classList.remove("open");
+  if (e.key === "Escape") closeLightbox();
 });
