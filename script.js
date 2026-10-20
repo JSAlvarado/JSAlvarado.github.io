@@ -35,10 +35,10 @@ sections.forEach((s) => navObserver.observe(s));
 // Browsers with scroll-linked CSS animation do the motion in CSS; the observers below are only the fallback
 const scrollLinked = window.CSS && CSS.supports("animation-timeline: view()");
 const revealTargets = document.querySelectorAll([
-  "main section:not(.contact) h2", ".about p", ".job", ".kicker", ".project",
-  ".awards > .award", ".project-block > .gallery > figure", ".mini-projects > .card",
-  ".skills > div", ".edu > .card", ".two-col > div", "#recognition .gallery > figure",
-  "#goals > .lede", ".timeline > li", ".contact > div"
+  ".section-head", ".about > p", "#floatech .lede", ".functions > li", ".project",
+  ".feature-body > .gallery > figure", ".mini-projects > .card", ".skills > div", ".job",
+  ".awards > .award", "#awards .gallery > figure", ".edu > .card", ".training",
+  "#roadmap > .lede", ".roadmap > li", ".contact > div"
 ].join(", "));
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -90,6 +90,11 @@ document.querySelectorAll(".copy-btn").forEach((btn) => {
 const lightbox = document.createElement("div");
 lightbox.className = "lightbox";
 lightbox.innerHTML = '<img alt="">';
+// Announce it as a dialog and let it take focus while open
+lightbox.setAttribute("role", "dialog");
+lightbox.setAttribute("aria-modal", "true");
+lightbox.setAttribute("aria-label", "Photo viewer. Press Escape or click to close.");
+lightbox.tabIndex = -1;
 document.body.appendChild(lightbox);
 const lightboxImg = lightbox.querySelector("img");
 
@@ -99,6 +104,7 @@ function openLightbox(img) {
   lightboxImg.src = img.src;
   lightboxImg.alt = img.alt;
   lightbox.classList.add("open");
+  lightbox.focus();
 }
 function closeLightbox() {
   if (!lightbox.classList.contains("open")) return;

@@ -1,4 +1,4 @@
-/* ============ DESIGN TOKENS: seven colors, spacing and fonts (see .claude/rules/design.md) ============ */
+/* ============ DESIGN TOKENS: seven colors, spacing, fonts and motion (see .claude/rules/) ============ */
 :root {
   --paper: #ffffff;
   --ink: #111111;
@@ -45,23 +45,34 @@ body {
   overflow-x: hidden;
 }
 img { max-width: 100%; display: block; }
-a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-h1, h2, h3, h4 { font-family: var(--font-head); color: inherit; margin: 0 0 var(--space-2); }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+h1, h2, h3 { font-family: var(--font-head); color: inherit; margin: 0 0 var(--space-2); }
 h1, h2 { font-weight: 800; line-height: 1.0; letter-spacing: -0.02em; }
-h2 { font-size: clamp(2.5rem, 7vw, 5.5rem); margin-bottom: var(--space-4); overflow-wrap: break-word; }
+h2 { font-size: clamp(2.5rem, 7vw, 5.5rem); margin: 0; overflow-wrap: break-word; }
 h3 { font-size: 1.15rem; font-weight: 700; line-height: 1.25; }
-h4 { font-size: 0.95rem; font-weight: 700; margin-top: var(--space-3); }
 p { margin: 0 0 var(--space-2); }
-ul { padding-left: 1.2em; margin: 0 0 var(--space-2); }
+ul, ol { padding-left: 1.2em; margin: 0 0 var(--space-2); }
 li { margin-bottom: 6px; }
 strong { font-weight: 600; }
 .muted { color: var(--muted); }
 .small { font-size: 0.88rem; }
-:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+/* Filled buttons: ring in the page color, so it shows against the page, not the button */
+.btn-primary:focus-visible { outline-color: var(--ink); }
+.contact .btn-primary:focus-visible { outline-color: var(--on-dark); }
 
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--space-2); }
 /* Each section gets the section space above and a clear gap below its last block */
 .section { padding-top: var(--space-section); padding-bottom: var(--space-5); }
+
+/* Section heading: small numbered label ("01. About") above the big title */
+.section-head { margin-bottom: var(--space-5); }
+.label, .when, .facts dt, .contact-grid dt {
+  margin: 0 0 var(--space-1); color: var(--muted);
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
+}
+.section-head .label { margin-bottom: var(--space-2); }
+.lede { font-size: 1.1rem; max-width: 62ch; }
 
 /* Skip link: hidden until a keyboard user tabs to it */
 .skip {
@@ -97,8 +108,7 @@ strong { font-weight: 600; }
   padding: 10px 0; color: var(--muted); text-decoration: none;
   font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
 }
-.nav-links a:hover, .nav-links a.active { color: var(--ink); }
-.nav-links .nav-cta { color: var(--ink); }
+.nav-links a:hover, .nav-links a.active, .nav-links .nav-cta { color: var(--ink); }
 
 /* ============ BUTTONS ============ */
 .btn {
@@ -112,106 +122,103 @@ strong { font-weight: 600; }
 .btn-ghost:hover { background: var(--ink); color: var(--paper); }
 
 /* ============ HERO ============ */
-.hero { padding-top: var(--space-5); padding-bottom: var(--space-2); }
-.status {
-  display: inline-block; margin: 0 0 var(--space-3); color: var(--muted);
-  font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
-}
-.dot { display: none; }
+.hero { padding-top: var(--space-5); padding-bottom: var(--space-5); }
+.status { margin: 0 0 var(--space-3); color: var(--muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; }
 h1 { font-size: clamp(2.4rem, 9vw, 6rem); margin-bottom: var(--space-3); }
-.lede { font-size: 1.1rem; max-width: 60ch; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: var(--space-4) 0 var(--space-5); }
 .facts { display: grid; grid-template-columns: 1fr; margin: 0; border-top: 1px solid var(--ink); }
 .facts div { padding: var(--space-2) 0; border-bottom: 1px solid var(--line); }
-.facts dt, .contact-grid dt {
-  color: var(--muted); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
-}
-.facts dd, .contact-grid dd { margin: 4px 0 0; font-weight: 500; }
-figcaption { margin-top: var(--space-1); color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
+.facts dd, .contact-grid dd { margin: 4px 0 0; font-weight: 500; overflow-wrap: anywhere; }
 
 /* ============ ABOUT ============ */
 .about p { max-width: 70ch; }
 
-/* ============ EXPERIENCE ============ */
-.job { padding: var(--space-4) 0; border-top: 1px solid var(--line); }
-.year {
-  display: inline-block; margin: 0 0 var(--space-1);
-  font-family: var(--font-head); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em;
-}
-.org { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--muted); font-size: 0.92rem; }
-.logo { height: 26px; width: auto; }
-
-/* ============ PHOTOS: grayscale until scrolled into view (JS adds .tone, then .in-view) ============ */
-.gallery { display: grid; grid-template-columns: 1fr; gap: var(--space-2); margin-top: var(--space-3); }
-.gallery figure, .project-photo { margin: 0; }
-.gallery img, .project-photo img {
-  width: 100%; aspect-ratio: 4 / 5; object-fit: cover; cursor: zoom-in;
-}
-/* Without JS photos stay in color; with JS they start gray and fill with color as they come into view */
-img.tone { filter: grayscale(100%); transition: filter var(--dur) var(--ease); }
-img.tone.in-view { filter: grayscale(0%); }
-.gallery-2 img, .project-photo img { aspect-ratio: 4 / 3; }
-
-/* ============ PROJECTS ============ */
-.project-block { padding: var(--space-4) 0; border-top: 1px solid var(--line); }
+/* ============ FLOATECH: charcoal intro band with three function cards, then details ============ */
+.band-dark { background: var(--charcoal); color: var(--on-dark); padding: var(--space-section) 0 var(--space-5); }
+.band-dark .label { color: var(--on-dark); }
+.functions { list-style: none; padding: 0; margin: var(--space-5) 0 0; display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
+.functions > li { margin: 0; padding-top: var(--space-3); border-top: 1px solid var(--on-dark); }
+.functions h3 { font-size: 1.35rem; }
+.functions p:last-child { margin: 0; }
+.feature-body { padding-top: var(--space-5); }
 .project { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
-.kicker {
-  margin: 0 0 var(--space-2); color: var(--muted);
-  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
-}
 .checks { list-style: none; padding: 0; }
 .checks li { position: relative; padding-left: 28px; }
 .checks li::before { content: "\2014"; position: absolute; left: 0; color: var(--muted); }
-.awards { display: grid; grid-template-columns: 1fr; gap: var(--space-2); margin-top: var(--space-4); }
-.award { padding: var(--space-3); background: var(--sand); color: var(--ink); }
-.award p { margin: 0; }
-.award .muted { color: var(--ink); }
-.award-title { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; }
 
-/* Tag chips: outlined, square, uppercase */
-.chips { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-top: var(--space-3); }
-.chips span, .badge-ai {
-  display: inline-block; padding: 4px 10px; border: 1px solid var(--ink);
-  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+/* ============ PHOTOS: grayscale until scrolled into view (JS adds .tone) ============ */
+figure { margin: 0; }
+.gallery { display: grid; grid-template-columns: 1fr; gap: var(--space-2); margin-top: var(--space-5); }
+.job .gallery { margin-top: var(--space-3); }
+.gallery img, .project-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; cursor: zoom-in; }
+.gallery-2 img, .project-photo img { aspect-ratio: 4 / 3; }
+figcaption { margin-top: var(--space-1); color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
+/* Without JS photos stay in color; with JS they start gray and fill with color as they come into view */
+img.tone { filter: grayscale(100%); transition: filter var(--dur) var(--ease); }
+img.tone.in-view { filter: grayscale(0%); }
+
+/* ============ TAG CHIPS: outlined, square, uppercase; no skill levels ============ */
+.chips { list-style: none; padding: 0; margin: var(--space-3) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-1); }
+.chips li, .badge-ai {
+  display: inline-block; margin: 0; padding: 5px 10px; border: 1px solid var(--ink);
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.4;
 }
 .badge-ai { margin-top: var(--space-2); }
-.mini-projects { display: grid; grid-template-columns: 1fr; gap: 0; }
-.mini-projects .card { border-top: 1px solid var(--line); padding: var(--space-3) 0; }
-.mini-projects p { margin: 0; color: var(--muted); }
 
-/* ============ SKILLS ============ */
-.skills { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
-.skills h3 { padding-bottom: var(--space-1); border-bottom: 1px solid var(--ink); }
-.skills ul { list-style: none; padding: 0; margin: 0; }
-.skills li { padding: 8px 0; border-bottom: 1px solid var(--line); margin: 0; }
-
-/* ============ EDUCATION AND RECOGNITION ============ */
-.edu { display: grid; grid-template-columns: 1fr; gap: 0; margin-bottom: var(--space-5); }
-/* Keep sub-groups inside a section clearly apart (lists, then certificates) */
-.two-col + .gallery, .project + .awards, .awards + .gallery { margin-top: var(--space-5); }
+/* ============ OTHER PROJECTS ============ */
+.mini-projects { display: grid; grid-template-columns: 1fr; column-gap: var(--space-4); }
 .card { padding: var(--space-3) 0; border-top: 1px solid var(--line); }
 .card p { margin: 0 0 4px; }
-.edu .muted:first-child {
-  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
-}
-.two-col { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
+.mini-projects .card > p:not(.badge-ai) { color: var(--muted); }
 
-/* ============ GOALS ============ */
-.timeline { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr; gap: 0; margin-top: var(--space-4); }
-.timeline > li { padding: var(--space-3) 0; border-top: 1px solid var(--ink); margin: 0; }
-.when {
-  margin: 0 0 var(--space-1); color: var(--muted);
-  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
+/* ============ SKILLS ============ */
+.skills { display: grid; grid-template-columns: 1fr; gap: var(--space-5); }
+.skills h3 { padding-bottom: var(--space-1); border-bottom: 1px solid var(--ink); }
+.skills .chips { margin-top: var(--space-2); }
+
+/* ============ EXPERIENCE ============ */
+.job { padding: var(--space-4) 0; border-top: 1px solid var(--line); }
+.year { margin: 0 0 var(--space-1); font-family: var(--font-head); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; }
+.org { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--muted); font-size: 0.92rem; }
+.logo { height: 26px; width: auto; }
+
+/* ============ AWARDS: sand band; only --ink text on sand (contrast) ============ */
+.band-sand { background: var(--sand); color: var(--ink); }
+.band-sand .label, .band-sand figcaption { color: var(--ink); }
+.awards { display: grid; grid-template-columns: 1fr; gap: var(--space-2); }
+.award { padding: var(--space-3); background: var(--paper); }
+.award p:last-child { margin: 0; }
+.award-title { margin: 0 0 4px; font-family: var(--font-head); font-size: 1.25rem; font-weight: 700; }
+
+/* ============ EDUCATION ============ */
+.edu { display: grid; grid-template-columns: 1fr; column-gap: var(--space-4); }
+.edu h3 { margin-bottom: 4px; }
+.training { margin-top: var(--space-5); }
+
+/* ============ CAREER ROADMAP: timeline with a visible time axis ============ */
+.roadmap {
+  list-style: none; margin: var(--space-5) 0 0; padding: 0 0 0 var(--space-4);
+  border-left: 2px solid var(--ink);
 }
+.roadmap > li { position: relative; margin: 0; padding-bottom: var(--space-5); }
+.roadmap > li:last-child { padding-bottom: 0; }
+/* Square marker sitting on the axis */
+.roadmap > li::before {
+  content: ""; position: absolute; top: 4px; left: calc(var(--space-4) * -1 - 8px);
+  width: 14px; height: 14px; background: var(--paper); border: 2px solid var(--ink);
+}
+.roadmap .when { color: var(--ink); font-size: 0.8rem; }
+.roadmap ul { margin-bottom: 0; }
 
 /* ============ CONTACT: charcoal block ============ */
 .contact {
   display: grid; grid-template-columns: 1fr; gap: var(--space-4);
   margin-top: var(--space-section); padding: var(--space-5) var(--space-2);
-  background: var(--charcoal); color: var(--on-dark); max-width: none;
+  background: var(--charcoal); color: var(--on-dark);
 }
 .contact > div { width: 100%; max-width: var(--max); margin: 0 auto; }
-.contact a, .contact dt, .contact .muted { color: var(--on-dark); }
+.contact .label, .contact dt { color: var(--on-dark); }
+.contact h2 { margin-bottom: var(--space-3); }
 .contact .btn-primary { background: var(--on-dark); color: var(--charcoal); border-color: var(--on-dark); }
 .contact .btn-primary:hover { background: transparent; color: var(--on-dark); }
 .resume-btn { margin-top: var(--space-2); }
@@ -225,7 +232,6 @@ img.tone.in-view { filter: grayscale(0%); }
   padding: 10px 14px; cursor: pointer; background: transparent; color: var(--on-dark); border: 1px solid var(--on-dark);
 }
 .contact-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-3); margin: 0; }
-.contact-grid dd { overflow-wrap: anywhere; }
 
 /* ============ FOOTER ============ */
 .footer {
@@ -234,7 +240,7 @@ img.tone.in-view { filter: grayscale(0%); }
   font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
 }
 .footer p { margin: 0; }
-.footer a { color: var(--muted); text-decoration: none; }
+.footer a { display: inline-block; padding: 11px 0; color: var(--muted); text-decoration: none; }
 .footer a:hover { color: var(--ink); }
 
 /* ============ LIGHTBOX ============ */
@@ -258,8 +264,8 @@ img.tone.in-view { filter: grayscale(0%); }
 /* Fallback for browsers without scroll-linked animation: each block fades and rises as it enters, no delays */
 .reveal { opacity: 0; transform: translateY(var(--rise-block)); transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease); }
 .reveal.visible { opacity: 1; transform: none; }
-h2.reveal { transform: translateX(calc(var(--rise-block) * -1)); }
-h2.reveal.visible { transform: none; }
+.section-head.reveal { transform: translateX(calc(var(--rise-block) * -1)); }
+.section-head.reveal.visible { transform: none; }
 
 /* Scroll-linked motion: blocks, titles and photos move continuously with the scroll position, no waiting */
 @supports (animation-timeline: view()) {
@@ -269,7 +275,7 @@ h2.reveal.visible { transform: none; }
     from { filter: grayscale(100%); clip-path: inset(var(--wipe) 0 0 0); }
     to { filter: grayscale(0%); clip-path: inset(0 0 0 0); }
   }
-  .reveal, h2.reveal, img.tone {
+  .reveal, img.tone {
     transition: none;
     animation-timing-function: linear; animation-fill-mode: both;
     animation-duration: 1ms; animation-duration: auto;
@@ -277,23 +283,22 @@ h2.reveal.visible { transform: none; }
   }
   /* Blocks and titles finish once they're about a third of the way up the screen */
   .reveal { opacity: 1; transform: none; animation-name: block-in; animation-range: entry 0% cover 30%; }
-  h2.reveal { animation-name: title-in; }
+  .section-head.reveal { transform: none; animation-name: title-in; }
   /* Photos uncover from the bottom up and fill with color until they're near the middle */
   img.tone { animation-name: photo-in; animation-range: entry 0% cover 45%; }
 }
 
 /* Printing shows everything in its final state, in color */
 @media print {
-  .reveal, h2.reveal { opacity: 1; transform: none; animation: none; }
-  img.tone { filter: none; animation: none; }
+  .reveal { opacity: 1; transform: none; animation: none; }
+  img.tone { filter: none; clip-path: none; animation: none; }
 }
 
 /* ============ TABLET: 640px and up ============ */
 @media (min-width: 640px) {
   .wrap { padding: 0 var(--space-4); }
-  .facts, .contact-grid, .awards, .two-col, .edu, .mini-projects, .skills, .gallery, .gallery-2 { grid-template-columns: 1fr 1fr; }
+  .facts, .contact-grid, .awards, .edu, .mini-projects, .skills, .functions, .gallery { grid-template-columns: 1fr 1fr; }
   .facts { column-gap: var(--space-4); }
-  .gallery-4 { grid-template-columns: 1fr 1fr; }
 }
 
 /* ============ DESKTOP: 960px and up ============ */
@@ -301,10 +306,10 @@ h2.reveal.visible { transform: none; }
   :root { --space-section: 96px; }
   .nav-toggle { display: none; }
   .nav-links {
-    display: flex; position: static; flex-direction: row; gap: var(--space-3);
+    display: flex; position: static; flex-direction: row; gap: var(--space-2);
     padding: 0; border: 0; background: none;
   }
-  .nav-links a { padding: 4px 0; position: relative; }
+  .nav-links a { padding: 4px 0; position: relative; font-size: 0.7rem; letter-spacing: 0.1em; }
   /* Thin underline slides in under the hovered or current link */
   .nav-links a::after {
     content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--ink);
@@ -313,25 +318,29 @@ h2.reveal.visible { transform: none; }
   .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
   .hero { padding-top: var(--space-section); }
   .facts { grid-template-columns: repeat(4, 1fr); }
-  .project { grid-template-columns: 1fr 1fr; gap: var(--space-5); align-items: start; }
-  .gallery, .edu, .mini-projects, .timeline { grid-template-columns: repeat(3, 1fr); }
-  .mini-projects, .edu { column-gap: var(--space-4); }
-  .timeline { column-gap: var(--space-4); }
+  .functions, .awards, .gallery { grid-template-columns: repeat(3, 1fr); }
   .gallery-4 { grid-template-columns: repeat(4, 1fr); }
   /* The two certificates stay two-up, even though they also carry the .gallery class */
   .gallery-2 { grid-template-columns: 1fr 1fr; }
-  .skills { grid-template-columns: repeat(4, 1fr); }
+  .project { grid-template-columns: 1fr 1fr; gap: var(--space-5); align-items: start; }
+  .job { display: grid; grid-template-columns: 120px 1fr; gap: var(--space-4); }
+  /* Roadmap turns horizontal: the time axis runs across the top, one marker per stage */
+  .roadmap {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4);
+    padding: var(--space-4) 0 0; border-left: 0; border-top: 2px solid var(--ink);
+  }
+  .roadmap > li { padding-bottom: 0; }
+  .roadmap > li::before { top: calc(var(--space-4) * -1 - 8px); left: 0; }
   .contact { grid-template-columns: 1fr 1fr; padding: var(--space-section) var(--space-4); }
   .contact > div { max-width: calc(var(--max) / 2); }
   .contact > div:first-child { margin-right: 0; }
   .contact > div:last-child { margin-left: 0; }
-  .job { display: grid; grid-template-columns: 120px 1fr; gap: var(--space-4); }
 }
 
 /* ============ REDUCED MOTION ============ */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .reveal, h2.reveal { opacity: 1; transform: none; }
+  .reveal, .section-head.reveal { opacity: 1; transform: none; }
   img.tone { filter: none; clip-path: none; }
 }

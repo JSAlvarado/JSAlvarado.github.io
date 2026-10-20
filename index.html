@@ -4,36 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Johnstheward S. Alvarado | Computer Engineering</title>
-  <meta name="description" content="Johnstheward S. Alvarado, Computer Engineering student in Davao City. Network, field engineering and technical support experience with Smart Communications SWEEP, plus embedded and IoT design work.">
+  <meta name="description" content="Johnstheward S. Alvarado, Computer Engineering student in Davao City. Network and field technical support experience as a Smart Communications SWEEP trainee, plus the FLOATech Arduino-based monitoring and automation design project.">
   <meta property="og:title" content="Johnstheward S. Alvarado | Computer Engineering">
   <meta property="og:description" content="Computer Engineering: networking, embedded systems and IoT. Available for work, anywhere.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://jsalvarado.github.io/">
   <meta property="og:image" content="https://jsalvarado.github.io/assets/floatech-photo.jpg">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23111111'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='26' font-weight='800' text-anchor='middle' fill='%23ffffff'%3EJA%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <meta name="theme-color" content="#0b1d33">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232dd4bf'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='26' font-weight='800' text-anchor='middle' fill='%230b1d33'%3EJA%3C/text%3E%3C/svg%3E">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <a class="skip" href="#about">Skip to content</a>
 
-  <!-- ============ NAVIGATION ============ -->
+  <!-- ============ NAVIGATION: fixed bar, hamburger on mobile ============ -->
   <header class="nav">
     <div class="wrap nav-inner">
       <a href="#top" class="brand"><span class="mark" aria-hidden="true">JA</span>J. S. Alvarado</a>
       <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
-      <nav id="nav-links" class="nav-links">
+      <nav id="nav-links" class="nav-links" aria-label="Sections">
         <a href="#about">About</a>
-        <a href="#experience">Experience</a>
+        <a href="#floatech">FLOATech</a>
         <a href="#projects">Projects</a>
         <a href="#skills">Skills</a>
-        <a href="#recognition">Recognition</a>
-        <a href="#goals">Goals</a>
+        <a href="#experience">Experience</a>
+        <a href="#awards">Awards</a>
+        <a href="#education">Education</a>
+        <a href="#roadmap">Roadmap</a>
         <a href="#contact" class="nav-cta">Contact</a>
       </nav>
     </div>
@@ -41,66 +43,204 @@
 
   <main id="top">
 
-    <!-- ============ HERO ============ -->
-    <section class="hero wrap">
-      <div class="hero-text">
-        <p class="status"><span class="dot"></span>Available for work, anywhere</p>
-        <h1>Johnstheward S. Alvarado</h1>
-        <p class="lede">
-          I diagnose systems, wire connections and troubleshoot problems. I’ve helped install cell site
-          equipment with Smart Communications and set up Wi-Fi and CCTV for a school campus.
-        </p>
-        <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">Get in touch</a>
-          <a href="#experience" class="btn btn-ghost">See my experience</a>
-          <a href="assets/Johnstheward-Alvarado-Resume.pdf" class="btn btn-ghost" download>Download resume ↓</a>
-        </div>
-        <dl class="facts">
-          <div><dt>Based in</dt><dd>Davao City, Philippines</dd></div>
-          <div><dt>Degree</dt><dd>BS Computer Engineering, Holy Cross of Davao College</dd></div>
-          <div><dt>Field experience</dt><dd>Cell site installation, Wi-Fi access points, CCTV</dd></div>
-          <div><dt>Looking for</dt><dd>New opportunities in tech</dd></div>
-        </dl>
+    <!-- ============ HERO (sources: resume, portfolio PDF) ============ -->
+    <section class="hero wrap" aria-label="Introduction">
+      <p class="status">Available for work, anywhere</p>
+      <h1>Johnstheward S. Alvarado</h1>
+      <p class="lede">
+        John installs, tests and troubleshoots the hardware that keeps people connected, from helping
+        install cell site equipment with Smart Communications to setting up Wi-Fi and CCTV for a school campus.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Get in touch</a>
+        <a href="#floatech" class="btn btn-ghost">See FLOATech</a>
+        <a href="assets/Johnstheward-Alvarado-Resume.pdf" class="btn btn-ghost" download>Download resume</a>
       </div>
+      <dl class="facts">
+        <div><dt>Based in</dt><dd>Davao City, Philippines</dd></div>
+        <div><dt>Degree</dt><dd>BS Computer Engineering, Holy Cross of Davao College</dd></div>
+        <div><dt>Field experience</dt><dd>Cell site installation, Wi-Fi access points, CCTV</dd></div>
+        <div><dt>Looking for</dt><dd>New opportunities in tech</dd></div>
+      </dl>
     </section>
 
-    <!-- ============ ABOUT ============ -->
-    <section id="about" class="section wrap">
-      <h2>About me</h2>
-      <div class="about">
-        <div>
+    <!-- ============ 01 ABOUT (sources: resume profile, CLAUDE.md) ============ -->
+    <section id="about" class="section wrap about">
+      <div class="section-head">
+        <p class="label">01. About</p>
+        <h2>About</h2>
+      </div>
+      <p class="lede">
+        John is a Computer Engineering student at Holy Cross of Davao College with hands-on experience in cell site
+        installation, Wi-Fi and CCTV setup, and hardware troubleshooting. In 2026 John completed Smart Communications’
+        Wireless Engineering Education Program (SWEEP), working alongside engineers on cell sites.
+      </p>
+      <p>
+        John follows procedures closely, works safely on site, explains technical problems in plain language,
+        and is building toward a career in embedded systems, IoT and networking.
+      </p>
+      <p>
+        John learns by building, and uses <strong>Claude Code</strong>, Anthropic’s AI coding assistant, to help write
+        and debug code, work through problems, document work and build web pages, including this one.
+      </p>
+    </section>
+
+    <!-- ============ 02 FLOATECH: feature project (sources: resume, portfolio PDF) ============ -->
+    <section id="floatech" class="section feature">
+      <div class="band-dark">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="label">02. FLOATech</p>
+            <h2>FLOATech</h2>
+          </div>
           <p class="lede">
-            I’m a Computer Engineering student with hands-on experience in technical support, data
-            management and field operations. I completed Smart Communications’ Wireless Engineering
-            Education Program (SWEEP) in 2026, where I worked alongside engineers on cell sites.
+            An Arduino-based, solar-powered floating unit for tilapia farms. It looks after a fish pond automatically,
+            designed so farmers of <em>Oreochromis niloticus</em> (Nile tilapia) spend less time checking the pond by hand.
+            Built and tested on a real pond by a four-person team at Holy Cross of Davao College, 2026.
           </p>
-          <p>
-            I follow procedures closely, work safely on site, and turn technical detail into clear answers
-            for people who aren’t technical. I’m comfortable working to deadlines and I’m also open to
-            customer-facing technical roles, where those communication and troubleshooting skills matter
-            most.
-          </p>
-          <p>
-            I learn by building, and I use <strong>Claude Code</strong>, Anthropic’s AI coding assistant, to
-            work faster. It helps me write and debug code, work through problems, document my work and build
-            web pages, including this one. That lets me move from an idea to a working result faster, while I
-            keep learning how each part works.
-          </p>
+          <ol class="functions" role="list">
+            <li>
+              <p class="label">01.</p>
+              <h3>Real-time water monitoring</h3>
+              <p>Water-parameter sensors with real-time feedback monitoring.</p>
+            </li>
+            <li>
+              <p class="label">02.</p>
+              <h3>Automated feeding</h3>
+              <p>An automated feeder that feeds the fish on schedule.</p>
+            </li>
+            <li>
+              <p class="label">03.</p>
+              <h3>Water aeration</h3>
+              <p>Runs water aeration for the pond automatically.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="wrap feature-body">
+        <div class="project">
+          <figure class="project-photo">
+            <img src="assets/floatech-photo.jpg" alt="The FLOATech floating unit deployed on a tilapia pond" loading="lazy">
+            <figcaption>The FLOATech unit deployed on a tilapia pond</figcaption>
+          </figure>
+          <div>
+            <h3>What went into it</h3>
+            <ul class="checks" role="list">
+              <li>Arduino control with custom-soldered circuit boards, voltage regulators, LCD and keypad</li>
+              <li>Solar panel, charge controller and battery for off-grid power</li>
+              <li>Weatherproof enclosures on a pontoon frame of buoyant barrels</li>
+            </ul>
+            <p class="small muted">
+              Recognized twice in 2026: Second Runner Up, Best Design Project Exhibit (TechnoFair 2026), and
+              2nd Best Research Poster (CET Research Conference, Conversazione 2026).
+            </p>
+            <ul role="list" class="chips" aria-label="Topics">
+              <li>Arduino</li><li>Sensors</li><li>Automation</li><li>Solar power</li><li>Aquaculture tech</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="gallery">
+          <figure><img src="assets/floatech-build.jpg" alt="Wiring and testing the control electronics" loading="lazy"><figcaption>Wiring and testing the control electronics</figcaption></figure>
+          <figure><img src="assets/floatech-team.jpg" alt="The team with the finished prototype" loading="lazy"><figcaption>The team with the finished prototype</figcaption></figure>
+          <figure><img src="assets/floatech-conversazione.jpg" alt="Accepting the research poster award at Conversazione 2026" loading="lazy"><figcaption>Accepting the research poster award at Conversazione 2026</figcaption></figure>
         </div>
       </div>
     </section>
 
-    <!-- ============ EXPERIENCE ============ -->
+    <!-- ============ 03 OTHER PROJECTS (source: CLAUDE.md) ============ -->
+    <section id="projects" class="section wrap">
+      <div class="section-head">
+        <p class="label">03. Other projects</p>
+        <h2>Other projects</h2>
+      </div>
+      <div class="mini-projects">
+        <article class="card">
+          <h3>Function generator</h3>
+          <p>A basic function generator circuit.</p>
+        </article>
+        <article class="card">
+          <h3>Mono amplifier with speaker</h3>
+          <p>An audio amplifier circuit driving a speaker.</p>
+        </article>
+        <article class="card">
+          <h3>Walking cobot</h3>
+          <p>A walking cobot (collaborative robot) build.</p>
+        </article>
+        <article class="card">
+          <h3>This website</h3>
+          <p>HTML, CSS and JavaScript, hosted on GitHub Pages.</p>
+          <p class="badge-ai">Built with Claude Code</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 04 SKILLS: tag chips, no skill levels (source: resume) ============ -->
+    <section id="skills" class="section wrap">
+      <div class="section-head">
+        <p class="label">04. Skills</p>
+        <h2>Skills</h2>
+      </div>
+      <div class="skills">
+        <div>
+          <h3>Networking and field work</h3>
+          <ul role="list" class="chips">
+            <li>Wi-Fi access point installation and setup</li>
+            <li>Cell site installation support</li>
+            <li>Cable connection and termination</li>
+            <li>CCTV installation</li>
+            <li>Network performance monitoring</li>
+            <li>Basic networking</li>
+            <li>Site safety procedures (OSH)</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Hardware and embedded</h3>
+          <ul role="list" class="chips">
+            <li>Hardware troubleshooting</li>
+            <li>Microcontroller and embedded development</li>
+            <li>Sensors and automation</li>
+            <li>Solar power systems</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Software and tools</h3>
+          <ul role="list" class="chips">
+            <li>Claude Code (AI-assisted development)</li>
+            <li>HTML, CSS and JavaScript</li>
+            <li>Microsoft Excel</li>
+            <li>Ookla Insights</li>
+            <li>CellMapper</li>
+            <li>AI prompting for documentation</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Working with people</h3>
+          <ul role="list" class="chips">
+            <li>On-site support for non-technical staff</li>
+            <li>Clear technical explanations</li>
+            <li>Accurate data entry and records</li>
+            <li>Teamwork under deadlines</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 05 EXPERIENCE (sources: resume, portfolio PDF) ============ -->
     <section id="experience" class="section wrap">
-      <h2>Experience</h2>
+      <div class="section-head">
+        <p class="label">05. Experience</p>
+        <h2>Experience</h2>
+      </div>
 
       <article class="job">
         <p class="year">2026</p>
         <div class="job-body">
           <h3>Wireless Engineering Trainee</h3>
           <p class="org">
-            <img class="logo" src="assets/smart-logo.png" alt="Smart Communications logo">
-            <img class="logo" src="assets/sweep-logo.png" alt="SWEEP logo">
+            <img class="logo" src="assets/smart-logo.png" alt="">
+            <img class="logo" src="assets/sweep-logo.png" alt="">
             Smart Communications, Inc. · Smart Wireless Engineering Education Program (SWEEP) · Davao
           </p>
           <ul>
@@ -108,14 +248,13 @@
             <li>Recorded and analyzed network performance data in Excel, Ookla Insights and CellMapper to support network monitoring.</li>
             <li>Checked rack and board status in network equipment management software to confirm hardware was active and running normally.</li>
             <li>Built HTML pages and AI prompts that made the team’s internal documentation faster to produce and easier to use.</li>
-            <li>Worked with engineering teams under deadlines, with close attention to detail and procedure.</li>
             <li>Completed the program and received a Certificate of Completion from Smart Communications.</li>
           </ul>
           <div class="gallery gallery-4">
-            <figure><img src="assets/sweep-cell-site.jpg" alt="John terminating cables on an outdoor radio unit at a cell site" loading="lazy"><figcaption>Connecting and terminating cables on an outdoor radio unit, with labeled feeder and grounding cables</figcaption></figure>
+            <figure><img src="assets/sweep-cell-site.jpg" alt="John terminating cables on an outdoor radio unit at a cell site" loading="lazy"><figcaption>Terminating cables on an outdoor radio unit</figcaption></figure>
             <figure><img src="assets/smart-team-photo.jpeg" alt="John receiving the SWEEP Certificate of Completion with Smart engineers" loading="lazy"><figcaption>Receiving the SWEEP Certificate of Completion</figcaption></figure>
-            <figure><img src="assets/sweep-monitoring.jpg" alt="Reviewing rack and board status on a laptop" loading="lazy"><figcaption>Reviewing rack and board status in network equipment management software</figcaption></figure>
-            <figure><img src="assets/sweep-site-visit.jpg" alt="Site visit with the engineering team and service truck" loading="lazy"><figcaption>Site visit: unloading tool cases, batteries and equipment at the site shelter</figcaption></figure>
+            <figure><img src="assets/sweep-monitoring.jpg" alt="Reviewing rack and board status on a laptop" loading="lazy"><figcaption>Reviewing rack and board status in equipment management software</figcaption></figure>
+            <figure><img src="assets/sweep-site-visit.jpg" alt="Site visit with the engineering team and service truck" loading="lazy"><figcaption>Site visit with the engineering team and service truck</figcaption></figure>
           </div>
         </div>
       </article>
@@ -125,7 +264,7 @@
         <div class="job-body">
           <h3>Network and CCTV Technician</h3>
           <p class="org">
-            <img class="logo" src="assets/anawim-logo.png" alt="Anawim Elementary School logo">
+            <img class="logo" src="assets/anawim-logo.png" alt="">
             Anawim Elementary School, Inc. · Davao City
           </p>
           <ul>
@@ -143,217 +282,117 @@
           <p class="org">Various assignments · Davao City</p>
           <ul>
             <li>Kept digital records and inventory data accurate and up to date in Microsoft Excel.</li>
-            <li>Supported sales operations with inventory tracking and administrative coordination.</li>
-            <li>Handled several tasks at once reliably and stayed organized under pressure.</li>
+            <li>Supported sales operations with inventory tracking and administrative coordination, often handling several tasks at once.</li>
           </ul>
         </div>
       </article>
     </section>
 
-    <!-- ============ PROJECTS ============ -->
-    <section id="projects" class="section wrap">
-      <h2>Projects</h2>
-
-      <!-- FLOATech -->
-      <article class="project-block">
-        <p class="kicker">Design project · Embedded and IoT · 2026</p>
-        <div class="project">
-          <figure class="project-photo">
-            <img src="assets/floatech-photo.jpg" alt="The FLOATech floating unit deployed on a tilapia pond" loading="lazy">
-            <figcaption>The FLOATech unit deployed on a tilapia pond</figcaption>
-          </figure>
-          <div>
-            <h3>FLOATech: Arduino-based floating unit for tilapia farms</h3>
-            <p>
-              A solar-powered unit that floats on a fish pond and looks after it automatically. It monitors
-              water parameters in real time, feeds the fish on schedule and runs aeration, so farmers of
-              <em>Oreochromis niloticus</em> (Nile tilapia) spend less time checking the pond by hand.
-            </p>
-            <p>Built and tested on a real pond by a four-person team at Holy Cross of Davao College.</p>
-            <h4>What went into it</h4>
-            <ul class="checks">
-              <li>Water-parameter sensors with real-time feedback monitoring</li>
-              <li>Automated feeder and water aeration</li>
-              <li>Arduino control with custom-soldered circuit boards, voltage regulators, LCD and keypad</li>
-              <li>Solar panel, charge controller and battery for off-grid power</li>
-              <li>Weatherproof enclosures on a pontoon frame of buoyant barrels</li>
-            </ul>
-            <p class="chips"><span>Arduino</span><span>Sensors</span><span>Automation</span><span>Solar power</span><span>Aquaculture tech</span></p>
-          </div>
+    <!-- ============ 06 AWARDS: sand band (sources: resume, portfolio PDF) ============ -->
+    <section id="awards" class="section band-sand">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="label">06. Awards</p>
+          <h2>Awards</h2>
         </div>
-
         <div class="awards">
           <div class="award">
-            <p class="award-title">Second Runner Up</p>
-            <p>Best Design Project Exhibit, TechnoFair 2026</p>
-            <p class="muted">Holy Cross of Davao College, March 2026</p>
+            <p class="label">2025</p>
+            <p class="award-title">Champion</p>
+            <p>Networking Competition</p>
           </div>
           <div class="award">
+            <p class="label">March 2026</p>
+            <p class="award-title">Second Runner Up</p>
+            <p>Best Design Project Exhibit, TechnoFair 2026 (FLOATech), Holy Cross of Davao College</p>
+          </div>
+          <div class="award">
+            <p class="label">May 2026</p>
             <p class="award-title">2nd Best Research Poster</p>
-            <p>CET Research Conference, Conversazione 2026</p>
-            <p class="muted">Holy Cross of Davao College, May 2026</p>
+            <p>CET Research Conference, Conversazione 2026 (FLOATech), Holy Cross of Davao College</p>
           </div>
         </div>
-
-        <div class="gallery">
-          <figure><img src="assets/floatech-build.jpg" alt="Wiring and testing the control electronics" loading="lazy"><figcaption>Wiring and testing the control electronics by hand</figcaption></figure>
-          <figure><img src="assets/floatech-team.jpg" alt="The team with the finished prototype" loading="lazy"><figcaption>The team with the finished prototype</figcaption></figure>
-          <figure><img src="assets/floatech-conversazione.jpg" alt="Accepting the research poster award at Conversazione 2026" loading="lazy"><figcaption>Accepting the award at Conversazione 2026: “Uniting Ideas, Building Partnerships, Powering a Sustainable Future”</figcaption></figure>
-        </div>
-      </article>
-
-      <!-- Other builds -->
-      <article class="project-block">
-        <p class="kicker">Other builds</p>
-        <div class="mini-projects">
-          <div class="card">
-            <h3>Function generator</h3>
-            <p>A basic function generator circuit.</p>
-          </div>
-          <div class="card">
-            <h3>Mono amplifier with speaker</h3>
-            <p>An audio amplifier circuit driving a speaker.</p>
-          </div>
-          <div class="card">
-            <h3>Walking cobot</h3>
-            <p>A walking cobot (collaborative robot) build.</p>
-          </div>
-          <div class="card">
-            <h3>This website</h3>
-            <p>HTML, CSS and JavaScript, hosted on GitHub Pages.</p>
-            <span class="badge-ai">Built with Claude Code</span>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <!-- ============ SKILLS ============ -->
-    <section id="skills" class="section wrap">
-      <h2>Skills</h2>
-      <div class="skills">
-        <div>
-          <h3>Networking and field work</h3>
-          <ul>
-            <li>Wi-Fi access point installation and setup</li>
-            <li>Cell site installation support</li>
-            <li>Cable connection and termination</li>
-            <li>CCTV installation</li>
-            <li>Network performance monitoring</li>
-            <li>Basic networking</li>
-            <li>Site safety procedures (OSH)</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Hardware and embedded</h3>
-          <ul>
-            <li>Hardware troubleshooting</li>
-            <li>Microcontroller and embedded development</li>
-            <li>Sensors and automation</li>
-            <li>Solar power systems</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Software and tools</h3>
-          <ul>
-            <li>Claude Code (AI-assisted development)</li>
-            <li>HTML, CSS and JavaScript</li>
-            <li>Microsoft Excel</li>
-            <li>Ookla Insights and CellMapper</li>
-            <li>AI prompting for documentation</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Working with people</h3>
-          <ul>
-            <li>On-site support for non-technical staff</li>
-            <li>Explaining technical issues clearly</li>
-            <li>Accurate data entry and records</li>
-            <li>Working to deadlines in a team</li>
-          </ul>
+        <div class="gallery gallery-2">
+          <figure><img src="assets/floatech-cert-technofair.jpg" alt="TechnoFair 2026 Certificate of Recognition, Second Runner Up" loading="lazy"><figcaption>TechnoFair 2026 certificate, Second Runner Up</figcaption></figure>
+          <figure><img src="assets/floatech-cert-poster.jpg" alt="CET Research Conference 2026 Certificate of Recognition, 2nd Best Research Poster" loading="lazy"><figcaption>CET Research Conference 2026 certificate, 2nd Best Research Poster</figcaption></figure>
         </div>
       </div>
     </section>
 
-    <!-- ============ EDUCATION & RECOGNITION ============ -->
-    <section id="recognition" class="section wrap">
-      <h2>Education and recognition</h2>
+    <!-- ============ 07 EDUCATION: both degree lines live here (sources: resume, CLAUDE.md) ============ -->
+    <section id="education" class="section wrap">
+      <div class="section-head">
+        <p class="label">07. Education</p>
+        <h2>Education</h2>
+      </div>
       <div class="edu">
-        <div class="card">
-          <p class="muted">2023 to present</p>
+        <article class="card">
+          <p class="label">2023 to present</p>
           <h3>BS Computer Engineering</h3>
           <p>Holy Cross of Davao College</p>
-          <p class="muted small">Previously enrolled in BS Electronics Engineering, 2022 to 2023</p>
-        </div>
-        <div class="card">
-          <p class="muted">2016 to 2022</p>
+        </article>
+        <article class="card">
+          <p class="label">2022 to 2023</p>
+          <h3>BS Electronics Engineering</h3>
+          <p>Previously enrolled</p>
+        </article>
+        <article class="card">
+          <p class="label">2016 to 2022</p>
           <h3>Junior and Senior High School</h3>
           <p>Davao City National High School</p>
-          <p class="muted small">Junior High 2016 to 2020 · Senior High 2020 to 2022</p>
-        </div>
-        <div class="card">
-          <p class="muted">Batch 2016</p>
+        </article>
+        <article class="card">
+          <p class="label">Batch 2016</p>
           <h3>Elementary</h3>
           <p>Anawim Elementary School</p>
-        </div>
+        </article>
       </div>
-      <div class="two-col">
-        <div>
-          <h3>Awards</h3>
-          <ul>
-            <li><strong>Champion</strong>, Networking Competition, 2025</li>
-            <li><strong>Second Runner Up</strong>, Best Design Project Exhibit, TechnoFair 2026 (FLOATech)</li>
-            <li><strong>2nd Best Research Poster</strong>, CET Research Conference, Conversazione 2026 (FLOATech)</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Training and memberships</h3>
-          <ul>
-            <li>Certificate of Completion, Smart Wireless Engineering Education Program (SWEEP), 2026</li>
-            <li>Occupational Safety and Health Orientation</li>
-            <li>Basic Computer Networking Workshop</li>
-            <li>Programming workshops</li>
-            <li>Member, Institute of Computer Engineers of the Philippines (ICpEP)</li>
-            <li>Participant, 16th CODEE Region XI Engineering Congress</li>
-          </ul>
-        </div>
-      </div>
-      <div class="gallery gallery-2">
-        <figure><img src="assets/floatech-cert-technofair.jpg" alt="TechnoFair 2026 Certificate of Recognition, Second Runner Up" loading="lazy"><figcaption>TechnoFair 2026 certificate, Second Runner Up</figcaption></figure>
-        <figure><img src="assets/floatech-cert-poster.jpg" alt="CET Research Conference 2026 Certificate of Recognition, 2nd Best Research Poster" loading="lazy"><figcaption>CET Research Conference 2026 certificate, 2nd Best Research Poster</figcaption></figure>
+      <div class="training">
+        <h3>Training and memberships</h3>
+        <ul class="checks" role="list">
+          <li>Certificate of Completion, Smart Wireless Engineering Education Program (SWEEP), 2026</li>
+          <li>Occupational Safety and Health Orientation</li>
+          <li>Basic Computer Networking Workshop; programming workshops</li>
+          <li>Member, Institute of Computer Engineers of the Philippines (ICpEP)</li>
+          <li>Participant, 16th CODEE Region XI Engineering Congress</li>
+        </ul>
       </div>
     </section>
 
-    <!-- ============ CAREER GOALS ============ -->
-    <section id="goals" class="section wrap">
-      <h2>Where I’m headed</h2>
+    <!-- ============ 08 CAREER ROADMAP: timeline with a visible time axis (source: career plan) ============ -->
+    <section id="roadmap" class="section wrap">
+      <div class="section-head">
+        <p class="label">08. Career roadmap</p>
+        <h2>Career roadmap</h2>
+      </div>
       <p class="lede">
-        I want to grow into a Computer Engineering professional in embedded systems, IoT and networking,
-        building technology that improves efficiency, sustainability and productivity.
+        John aims to become a Computer Engineering professional in embedded systems, IoT and networking, building
+        technology that improves efficiency, sustainability and productivity.
       </p>
-      <ol class="timeline">
+      <ol class="roadmap" role="list">
         <li>
-          <p class="when">Next 1–3 years</p>
+          <p class="when">1–3 years</p>
           <h3>Build the foundation</h3>
           <ul>
-            <li>Finish my degree and on-the-job training</li>
-            <li>Strengthen my programming and build more monitoring and automation projects</li>
-            <li>Grow my leadership, project management and communication skills</li>
+            <li>Complete the degree and on-the-job training</li>
+            <li>Improve programming skills and build more monitoring and automation projects</li>
+            <li>Develop leadership, project management and communication skills</li>
           </ul>
         </li>
         <li>
           <p class="when">3–5 years</p>
-          <h3>Deliver in industry</h3>
+          <h3>Grow in industry</h3>
           <ul>
-            <li>Build my career in the tech industry and take on more responsibility</li>
+            <li>Build a career in the tech industry and take on more responsibility</li>
             <li>Design and deploy real-world technology solutions</li>
-            <li>Join R&amp;D work on automation and smart systems</li>
+            <li>Join research and development on automation and smart systems</li>
           </ul>
         </li>
         <li>
           <p class="when">5–10 years</p>
           <h3>Give back</h3>
           <ul>
-            <li>Become a recognized expert in my field</li>
+            <li>Become a recognized expert in the field</li>
             <li>Contribute to innovation in food security and resource management</li>
             <li>Mentor future IT professionals in local communities</li>
           </ul>
@@ -361,17 +400,18 @@
       </ol>
     </section>
 
-    <!-- ============ CONTACT ============ -->
-    <section id="contact" class="section wrap contact">
+    <!-- ============ 09 CONTACT: charcoal block (only Gmail and city are public) ============ -->
+    <section id="contact" class="section contact">
       <div>
-        <h2>Let’s talk</h2>
-        <p>I’m open to new opportunities, wherever the work is. The fastest way to reach me is email.</p>
+        <p class="label">09. Contact</p>
+        <h2>Get in touch</h2>
+        <p>John is open to new opportunities, wherever the work is. Email is the fastest way to reach John.</p>
         <a href="assets/Johnstheward-Alvarado-Resume.pdf" class="btn btn-primary resume-btn" download>Download resume (PDF)</a>
       </div>
       <div>
         <div class="email-row">
           <a class="email" href="mailto:johnalvarado.565655@gmail.com">johnalvarado.565655@gmail.com</a>
-          <button class="copy-btn" data-copy="johnalvarado.565655@gmail.com">Copy</button>
+          <button class="copy-btn" type="button" data-copy="johnalvarado.565655@gmail.com">Copy</button>
         </div>
         <dl class="contact-grid">
           <div><dt>Location</dt><dd>Davao City, Philippines</dd></div>
@@ -381,6 +421,7 @@
     </section>
   </main>
 
+  <!-- ============ FOOTER ============ -->
   <footer class="footer wrap">
     <p>© 2026 Johnstheward S. Alvarado · Built with HTML, CSS, JavaScript and Claude Code</p>
     <a href="#top">Back to top ↑</a>
@@ -388,6 +429,5 @@
 
   <script src="script.js"></script>
   <!-- Chatbot slot: Wednesday's chatbot loads here as <script src="chatbot.js" defer></script> and uses the empty bottom-right corner -->
-
 </body>
 </html>
