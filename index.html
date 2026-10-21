@@ -125,12 +125,21 @@
                   <path class="anim particle signal s2 p-ring" d="M441 47 a24 24 0 0 1 34 0"/>
                   <path class="anim particle signal s3 p-ring" d="M434 40 a34 34 0 0 1 48 0"/>
                   <rect class="p-silver" x="384" y="168" width="32" height="18"/>
-                  <g class="anim particle pellet-x px1"><circle class="anim pellet-y p-ondark" cx="400" cy="190" r="2.5"/></g>
-                  <g class="anim particle pellet-x px2"><circle class="anim pellet-y p-ondark" cx="400" cy="190" r="2.5"/></g>
-                  <g class="anim particle pellet-x px3"><circle class="anim pellet-y p-ondark" cx="400" cy="190" r="2.5"/></g>
-                  <g class="anim particle pellet-x px4"><circle class="anim pellet-y p-ondark" cx="400" cy="190" r="2.5"/></g>
+                  <!-- Feeding: the thrower disc spins and flings pellets out in a fan -->
+                  <ellipse class="anim particle spinner p-silver" cx="400" cy="189" rx="11" ry="2.5"/>
+                  <g class="anim particle pellet-x px1"><circle class="anim pellet-y p-ondark" cx="400" cy="190" r="2.2"/></g>
+                  <g class="anim particle pellet-x px2"><circle class="anim pellet-y p-ondark" cx="400" cy="190" r="2.2"/></g>
+                  <g class="anim particle pellet-x px3"><circle class="anim pellet-y p-ondark" cx="400" cy="190" r="2.2"/></g>
+                  <g class="anim particle pellet-x px4"><circle class="anim pellet-y p-ondark" cx="400" cy="190" r="2.2"/></g>
+                  <g class="anim particle pellet-x px5"><circle class="anim pellet-y p-ondark" cx="400" cy="190" r="2.2"/></g>
+                  <g class="anim particle pellet-x px6"><circle class="anim pellet-y p-ondark" cx="400" cy="190" r="2.2"/></g>
+                  <g class="anim particle pellet-x px7"><circle class="anim pellet-y p-ondark" cx="400" cy="190" r="2.2"/></g>
+                  <g class="anim particle pellet-x px8"><circle class="anim pellet-y p-ondark" cx="400" cy="190" r="2.2"/></g>
                 </g>
                 <rect class="p-water" x="0" y="212" width="800" height="148"/>
+                <!-- Two fish rise to the surface to eat where the feed lands -->
+                <g class="anim particle feeder-fish ff1"><path class="p-fish p-fish--feeding" d="M196 240 q12 -7 24 0 q-12 7 -24 0 z M220 240 l7 -5 v10 z"/></g>
+                <g class="anim particle feeder-fish ff2"><path class="p-fish p-fish--feeding" d="M604 240 q-12 -7 -24 0 q12 7 24 0 z M580 240 l-7 -5 v10 z"/></g>
                 <g class="anim fish fish1"><path class="p-fish" d="M-60 322 q14 -8 28 0 q-14 8 -28 0 z M-32 322 l8 -6 v12 z"/></g>
                 <g class="anim fish fish2"><path class="p-fish" d="M-60 286 q14 -8 28 0 q-14 8 -28 0 z M-32 286 l8 -6 v12 z"/></g>
                 <!-- Under the water: sensor probe and diffuser, bobbing in step with the unit -->
@@ -154,6 +163,15 @@
                   <circle class="anim particle mb mb13 p-ring" cx="420.0" cy="266" r="1.1"/>
                   <circle class="anim particle mb mb14 p-ring" cx="424.6" cy="266" r="2.0"/>
                 </g>
+                <!-- Ripples where each pellet lands -->
+                <ellipse class="anim particle splash sp1 p-ring" cx="188" cy="212" rx="3" ry="1"/>
+                <ellipse class="anim particle splash sp2 p-ring" cx="214" cy="212" rx="3" ry="1"/>
+                <ellipse class="anim particle splash sp3 p-ring" cx="238" cy="212" rx="3" ry="1"/>
+                <ellipse class="anim particle splash sp4 p-ring" cx="260" cy="212" rx="3" ry="1"/>
+                <ellipse class="anim particle splash sp5 p-ring" cx="540" cy="212" rx="3" ry="1"/>
+                <ellipse class="anim particle splash sp6 p-ring" cx="562" cy="212" rx="3" ry="1"/>
+                <ellipse class="anim particle splash sp7 p-ring" cx="588" cy="212" rx="3" ry="1"/>
+                <ellipse class="anim particle splash sp8 p-ring" cx="614" cy="212" rx="3" ry="1"/>
                 <!-- Microbubbles reaching the surface make it fizz above the diffuser -->
                 <ellipse class="anim particle boil p-ring" cx="430" cy="212" rx="8" ry="1.5"/>
                 <ellipse class="anim particle boil boil2 p-ring" cx="430" cy="212" rx="8" ry="1.5"/>
@@ -242,18 +260,88 @@
       </div>
       <div class="mini-projects">
         <article class="card">
+          <!-- Small looping drawing: waveforms scroll across the screen while the knobs turn -->
+          <figure class="toy" aria-hidden="true">
+            <svg viewBox="0 0 160 90">
+              <rect class="t-body" x="6" y="12" width="148" height="66"/>
+              <rect class="t-ink" x="14" y="20" width="84" height="50"/>
+              <clipPath id="fg-screen"><rect x="14" y="20" width="84" height="50"/></clipPath>
+              <path class="t-grid" d="M14 45 H98 M56 20 V70"/>
+              <g clip-path="url(#fg-screen)"><path class="anim fg-wave t-trace" d="M14 45 q10 -24 20 0 t20 0 v-12 h10 v24 h10 v-12 v-12 h10 v24 h10 v-12 l5 -12 l10 24 l5 -12 l5 -12 l10 24 l5 -12 q10 -24 20 0 t20 0 v-12 h10 v24 h10 v-12 v-12 h10 v24 h10 v-12 l5 -12 l10 24 l5 -12 l5 -12 l10 24 l5 -12 q10 -24 20 0 t20 0 v-12 h10 v24 h10 v-12 v-12 h10 v24 h10 v-12 l5 -12 l10 24 l5 -12 l5 -12 l10 24 l5 -12"/></g>
+              <g class="anim knob knob-a"><circle class="t-body" cx="122" cy="34" r="9"/><path class="t-thin" d="M122 34 V26"/></g>
+              <g class="anim knob knob-b"><circle class="t-body" cx="143" cy="34" r="6"/><path class="t-thin" d="M143 34 V29"/></g>
+              <circle class="t-body" cx="118" cy="62" r="3"/><circle class="t-body" cx="131" cy="62" r="3"/>
+              <rect class="anim blink t-accent" x="141" y="59" width="6" height="6"/>
+            </svg>
+          </figure>
           <h3>Function generator</h3>
           <p>A basic function generator circuit.</p>
         </article>
         <article class="card">
+          <!-- Small looping drawing: level bars bounce, the speaker cone pumps and notes float out -->
+          <figure class="toy" aria-hidden="true">
+            <svg viewBox="0 0 160 90">
+              <rect class="t-body" x="8" y="32" width="50" height="40"/>
+              <rect class="anim vu v1 t-ink" x="15" y="44" width="5" height="22"/>
+              <rect class="anim vu v2 t-ink" x="23" y="44" width="5" height="22"/>
+              <rect class="anim vu v3 t-ink" x="31" y="44" width="5" height="22"/>
+              <rect class="anim vu v4 t-ink" x="39" y="44" width="5" height="22"/>
+              <circle class="t-body" cx="51" cy="40" r="3"/>
+              <path class="t-thin" d="M58 60 C70 60 72 52 84 52"/>
+              <rect class="t-body" x="84" y="16" width="46" height="66"/>
+              <circle class="t-body" cx="107" cy="28" r="5"/>
+              <g class="anim cone"><circle class="t-accent" cx="107" cy="56" r="16"/><circle class="t-ink" cx="107" cy="56" r="5"/></g>
+              <path class="anim sound w1 t-thin" d="M137 46 q5 10 0 20"/>
+              <path class="anim sound w2 t-thin" d="M143 41 q8 15 0 30"/>
+              <path class="anim sound w3 t-thin" d="M149 36 q11 20 0 40"/>
+              <text class="anim particle note n1 t-note" x="140" y="40">♪</text>
+              <text class="anim particle note n2 t-note" x="132" y="26">♫</text>
+            </svg>
+          </figure>
           <h3>Mono amplifier with speaker</h3>
           <p>An audio amplifier circuit driving a speaker.</p>
         </article>
         <article class="card">
+          <!-- Small looping drawing: the four-legged box cobot walks on a moving floor, diagonal legs in step -->
+          <figure class="toy" aria-hidden="true">
+            <svg viewBox="0 0 160 90">
+              <path class="anim ground t-dash" d="M0 84 H200"/>
+              <g class="anim bot">
+                <!-- Far-side legs, drawn behind the box -->
+                <g class="anim leg leg-b"><rect class="t-leg-far" x="56" y="54" width="6" height="26"/></g>
+                <g class="anim leg leg-a"><rect class="t-leg-far" x="98" y="54" width="6" height="26"/></g>
+                <rect class="t-accent" x="40" y="28" width="80" height="30"/>
+                <path class="t-thin" d="M48 36 H88 M48 43 H76"/>
+                <path class="t-thin" d="M52 28 V20"/>
+                <circle class="anim blink t-accent" cx="52" cy="18" r="2.5"/>
+                <!-- Front panel with two sensor eyes -->
+                <rect class="t-body" x="104" y="33" width="12" height="14"/>
+                <rect class="anim eye t-ink" x="107" y="36" width="2.5" height="4"/>
+                <rect class="anim eye t-ink" x="111.5" y="36" width="2.5" height="4"/>
+                <!-- Near-side legs: front and back swing in opposite pairs -->
+                <g class="anim leg leg-a"><rect class="t-body" x="46" y="56" width="7" height="22"/><rect class="t-ink" x="44" y="76" width="11" height="4"/></g>
+                <g class="anim leg leg-b"><rect class="t-body" x="106" y="56" width="7" height="22"/><rect class="t-ink" x="104" y="76" width="11" height="4"/></g>
+              </g>
+            </svg>
+          </figure>
           <h3>Walking cobot</h3>
-          <p>A walking cobot (collaborative robot) build.</p>
+          <p>A four-legged, box-type walking cobot (collaborative robot).</p>
         </article>
         <article class="card">
+          <!-- Small looping drawing: lines of code type themselves in a browser window -->
+          <figure class="toy" aria-hidden="true">
+            <svg viewBox="0 0 160 90">
+              <rect class="t-body" x="8" y="10" width="144" height="70"/>
+              <path class="t-thin" d="M8 22 H152"/>
+              <rect class="t-ink" x="14" y="14" width="4" height="4"/><rect class="t-ink" x="21" y="14" width="4" height="4"/><rect class="t-ink" x="28" y="14" width="4" height="4"/>
+              <rect class="anim type t1 t-ink" x="18" y="31" width="56" height="4"/>
+              <rect class="anim type t2 t-ink" x="26" y="41" width="78" height="4"/>
+              <rect class="anim type t3 t-accent-flat" x="26" y="51" width="40" height="4"/>
+              <rect class="anim type t4 t-ink" x="18" y="61" width="66" height="4"/>
+              <rect class="anim blink t-ink" x="88" y="60" width="2" height="7"/>
+              <rect class="t-accent" x="112" y="30" width="30" height="38"/>
+            </svg>
+          </figure>
           <h3>This website</h3>
           <p>HTML, CSS and JavaScript, hosted on GitHub Pages.</p>
           <p class="badge-ai">Built with Claude Code</p>

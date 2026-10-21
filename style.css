@@ -184,28 +184,57 @@ img.tone { filter: grayscale(100%); transition: filter var(--dur) var(--ease); }
 .p-text { fill: var(--ink); font: 700 13px "Poppins", sans-serif; letter-spacing: 0.02em; }
 
 
-/* The loop: everything waits (paused) until script.js says the drawing is on screen */
-.pond .anim { animation-play-state: paused; animation-iteration-count: infinite; }
-.pond.is-playing .anim { animation-play-state: running; }
+/* The loop: everything waits (paused) until script.js says the drawing is on screen (pond and project toys) */
+.pond .anim, .toy .anim { animation-play-state: paused; animation-iteration-count: infinite; }
+.pond.is-playing .anim, .toy.is-playing .anim { animation-play-state: running; }
 /* Moving bits only appear once the loop can run, so the still drawing has no stray dots */
-.pond:not(.is-ready) .particle { display: none; }
+.pond:not(.is-ready) .particle, .toy:not(.is-ready) .particle { display: none; }
 .bob { animation: bob 5s ease-in-out infinite; }
 @keyframes bob { 50% { transform: translateY(3px); } }
 .wave1 { animation: wave-left 6s linear infinite; }
 .wave2 { animation: wave-right 9s linear infinite; }
 @keyframes wave-left { to { transform: translateX(-80px); } }
 @keyframes wave-right { from { transform: translateX(-80px); } to { transform: none; } }
-/* Feed: each pellet flies out of the feeder in an arc and drops into the water */
+/* Feeding: the thrower disc spins and broadcasts pellets in low arcs past the barrels; they ripple where they land
+   in open water, and fish rise to eat */
+.spinner { transform-box: fill-box; transform-origin: center; animation: spin 0.35s linear infinite; }
+@keyframes spin { 50% { transform: scaleX(0.25); } }
 .pellet-x { animation: pellet-x 2.4s linear infinite; }
 .pellet-y { animation: pellet-y 2.4s infinite; }
-.px1 { --dx: -95px; } .px2 { --dx: -45px; animation-delay: 0.6s; } .px3 { --dx: 50px; animation-delay: 1.2s; } .px4 { --dx: 100px; animation-delay: 1.8s; }
-.px2 .pellet-y { animation-delay: 0.6s; } .px3 .pellet-y { animation-delay: 1.2s; } .px4 .pellet-y { animation-delay: 1.8s; }
+.splash { transform-box: fill-box; transform-origin: center; animation: splash 2.4s ease-out infinite; opacity: 0; }
+.px1 { --dx: -212px; --h: -16px; } .px1, .px1 .pellet-y, .sp1 { animation-delay: 0s; }
+.px2 { --dx: -186px; --h: -22px; } .px2, .px2 .pellet-y, .sp2 { animation-delay: -2.1s; }
+.px3 { --dx: -162px; --h: -14px; } .px3, .px3 .pellet-y, .sp3 { animation-delay: -1.8s; }
+.px4 { --dx: -140px; --h: -20px; } .px4, .px4 .pellet-y, .sp4 { animation-delay: -1.5s; }
+.px5 { --dx: 140px; --h: -18px; } .px5, .px5 .pellet-y, .sp5 { animation-delay: -1.2s; }
+.px6 { --dx: 162px; --h: -22px; } .px6, .px6 .pellet-y, .sp6 { animation-delay: -0.9s; }
+.px7 { --dx: 188px; --h: -14px; } .px7, .px7 .pellet-y, .sp7 { animation-delay: -0.6s; }
+.px8 { --dx: 214px; --h: -20px; } .px8, .px8 .pellet-y, .sp8 { animation-delay: -0.3s; }
 @keyframes pellet-x { from { transform: none; } 70%, to { transform: translateX(var(--dx)); } }
 @keyframes pellet-y {
   0% { transform: none; opacity: 1; animation-timing-function: ease-out; }
-  30% { transform: translateY(-26px); animation-timing-function: ease-in; }
+  30% { transform: translateY(var(--h)); animation-timing-function: ease-in; }
   70% { transform: translateY(22px); opacity: 1; }
   71%, 100% { transform: translateY(22px); opacity: 0; }
+}
+@keyframes splash {
+  0%, 69% { transform: scale(1); opacity: 0; }
+  70% { transform: scale(1); opacity: 0.9; }
+  100% { transform: scale(4, 2); opacity: 0; }
+}
+.p-fish--feeding { opacity: 0.7; }
+.feeder-fish { animation: nibble 2.4s ease-in-out infinite; }
+.ff2 { animation-delay: -1.2s; }
+@keyframes nibble {
+  0%, 100% { transform: translate(0, 10px); }
+  45% { transform: translate(6px, -14px); }
+  60% { transform: translate(4px, -12px); }
+}
+.ff2 { animation-name: nibble-left; }
+@keyframes nibble-left {
+  0%, 100% { transform: translate(0, 10px); }
+  45% { transform: translate(-6px, -14px); }
+  60% { transform: translate(-4px, -12px); }
 }
 /* Microbubbles: a fine plume that wobbles, grows a little as it rises and fades at the surface */
 .mb { transform-box: fill-box; transform-origin: center; animation: microbubble 2s ease-in infinite; }
@@ -245,6 +274,63 @@ img.tone { filter: grayscale(100%); transition: filter var(--dur) var(--ease); }
 .fish1 { animation: fish 22s linear infinite; }
 .fish2 { animation: fish 30s linear infinite; animation-delay: -14s; }
 @keyframes fish { from { transform: translateX(920px); } to { transform: none; } }
+
+/* ============ PROJECT TOYS: small looping drawings on the Other projects cards ============ */
+.toy { margin: 0 0 var(--space-2); }
+.toy svg { display: block; width: 100%; max-width: 176px; height: auto; overflow: hidden; }
+.t-body { fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; }
+.t-ink { fill: var(--ink); }
+.t-accent { fill: var(--sand); stroke: var(--ink); stroke-width: 1.5; }
+.t-accent-flat { fill: var(--sand); }
+.t-thin { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+.t-trace { fill: none; stroke: var(--sand); stroke-width: 1.5; }
+.t-grid { fill: none; stroke: var(--on-dark); stroke-width: 0.5; opacity: 0.25; }
+.t-leg-far { fill: var(--line); stroke: var(--ink); stroke-width: 1; }
+.t-dash { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 8 6; }
+.t-note { fill: var(--ink); font: 700 14px "Inter", sans-serif; }
+/* Pivots: each moving part turns around its own joint */
+.knob, .cone, .eye, .vu, .leg, .type, .note { transform-box: fill-box; }
+.knob, .cone, .eye { transform-origin: center; }
+.vu { transform-origin: 50% 100%; }
+.leg { transform-origin: 50% 0; }
+.type { transform-origin: 0 50%; }
+/* Function generator */
+.fg-wave { animation: fg-wave 3.6s linear infinite; }
+@keyframes fg-wave { to { transform: translateX(-120px); } }
+.knob-a { animation: knob 4s ease-in-out infinite; }
+.knob-b { animation: knob 3s ease-in-out infinite reverse; }
+@keyframes knob { 50% { transform: rotate(240deg); } }
+.blink { animation: blink 1.2s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0.15; } }
+/* Mono amplifier and speaker */
+.vu { animation: vu 0.9s ease-in-out infinite; }
+.v2 { animation-duration: 0.7s; } .v3 { animation-duration: 1.1s; } .v4 { animation-duration: 0.6s; }
+@keyframes vu { 0%, 100% { transform: scaleY(0.25); } 50% { transform: scaleY(1); } }
+.cone { animation: cone 0.45s ease-in-out infinite; }
+@keyframes cone { 50% { transform: scale(1.12); } }
+.sound { animation: signal 1.35s ease-in-out infinite; opacity: 0; }
+.w2 { animation-delay: 0.2s; } .w3 { animation-delay: 0.4s; }
+.note { animation: note 2.6s ease-out infinite; opacity: 0; }
+.n2 { animation-delay: 1.3s; }
+@keyframes note { 0% { transform: none; opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(12px, -18px) rotate(15deg); opacity: 0; } }
+/* Walking cobot */
+.ground { animation: ground 0.8s linear infinite; }
+@keyframes ground { to { transform: translateX(-14px); } }
+.bot { animation: bot 0.4s ease-in-out infinite; }
+@keyframes bot { 50% { transform: translateY(-2px); } }
+/* Diagonal pairs move together, like a four-legged walk */
+.leg-a { animation: swing 0.8s ease-in-out infinite; }
+.leg-b { animation: swing 0.8s ease-in-out infinite; animation-delay: -0.4s; }
+@keyframes swing { 0%, 100% { transform: rotate(16deg); } 50% { transform: rotate(-16deg); } }
+.eye { animation: eye 3.5s ease-in-out infinite; }
+@keyframes eye { 0%, 92%, 100% { transform: none; } 96% { transform: scaleY(0.1); } }
+/* This website: lines type in one after another, then clear */
+.type { animation: type 4.8s ease-out infinite; animation-fill-mode: both; }
+.t2 { animation-name: type2; } .t3 { animation-name: type3; } .t4 { animation-name: type4; }
+@keyframes type { 0% { transform: scaleX(0); } 12%, 88% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@keyframes type2 { 0%, 12% { transform: scaleX(0); } 26%, 88% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@keyframes type3 { 0%, 26% { transform: scaleX(0); } 38%, 88% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+@keyframes type4 { 0%, 38% { transform: scaleX(0); } 52%, 88% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
 
 /* ============ FLOATECH CALLOUTS: numbered labels on the pond photo ============ */
 /* The photo keeps its own shape here (no crop), so the percentage positions land on the right parts */
@@ -524,7 +610,7 @@ img.tone.in-view { filter: grayscale(0%); }
   .reveal { opacity: 1; transform: none; animation: none; }
   img.tone { filter: none; clip-path: none; animation: none; }
   .callout::before, .callout::after, .callout span { opacity: 1; transform: none; animation: none; }
-  .pond .particle { display: none !important; }
+  .pond .particle, .toy .particle { display: none !important; }
 }
 
 /* ============ TABLET: 640px and up ============ */
@@ -578,6 +664,6 @@ img.tone.in-view { filter: grayscale(0%); }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .reveal, .section-head.reveal { opacity: 1; transform: none; }
   img.tone { filter: none; clip-path: none; }
-  /* The pond drawing stays still: no moving feed, bubbles or signals, and no pause button */
-  .pond .particle { display: none !important; }
+  /* The pond and project drawings stay still: no moving feed, bubbles, signals or notes */
+  .pond .particle, .toy .particle { display: none !important; }
 }

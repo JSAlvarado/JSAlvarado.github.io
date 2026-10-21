@@ -74,12 +74,14 @@ document.querySelectorAll(".gallery img, .project-photo img").forEach((img) => {
 });
 
 // ---- Copy email button ----
-// FLOATech pond animation: loops only while it's on screen
-const pond = document.querySelector(".pond");
-if (pond) {
-  pond.classList.add("is-ready");
-  new IntersectionObserver(([entry]) => pond.classList.toggle("is-playing", entry.isIntersecting)).observe(pond);
-}
+// Looping drawings (FLOATech pond and the project toys): each plays only while it's on screen
+const loopObserver = new IntersectionObserver((entries) =>
+  entries.forEach((entry) => entry.target.classList.toggle("is-playing", entry.isIntersecting))
+);
+document.querySelectorAll(".pond, .toy").forEach((fig) => {
+  fig.classList.add("is-ready");
+  loopObserver.observe(fig);
+});
 
 document.querySelectorAll(".copy-btn").forEach((btn) => {
   btn.addEventListener("click", async () => {
