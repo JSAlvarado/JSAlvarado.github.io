@@ -1,3 +1,6 @@
+// Labels this file sets itself follow the language switch in lang.js (English when lang.js isn't loaded)
+const t = (en) => (window.siteLang ? window.siteLang.t(en) : en);
+
 // ---- Mobile menu: show/hide the nav links on small screens ----
 const toggle = document.querySelector(".nav-toggle");
 const links = document.getElementById("nav-links");
@@ -5,16 +8,18 @@ const links = document.getElementById("nav-links");
 toggle.addEventListener("click", () => {
   const open = links.classList.toggle("open");
   toggle.setAttribute("aria-expanded", open);
-  toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  toggle.setAttribute("aria-label", t(open ? "Close menu" : "Open menu"));
 });
-// Close the menu after picking a section
-links.querySelectorAll("a").forEach((a) =>
-  a.addEventListener("click", () => {
-    links.classList.remove("open");
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.setAttribute("aria-label", "Open menu");
-  })
-);
+// Close the menu after picking a section, or with the Escape key
+function closeMenu() {
+  links.classList.remove("open");
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.setAttribute("aria-label", t("Open menu"));
+}
+links.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeMenu));
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && links.classList.contains("open")) { closeMenu(); toggle.focus(); }
+});
 
 // ---- Highlight the nav link for the section on screen ----
 const sections = document.querySelectorAll("main section[id]");
@@ -73,8 +78,7 @@ document.querySelectorAll(".gallery img, .project-photo img").forEach((img) => {
   if (!scrollLinked) toneObserver.observe(img);
 });
 
-// ---- Copy email button ----
-// Looping drawings (FLOATech pond and the project toys): each plays only while it's on screen
+// ---- Looping drawings (FLOATech pond and the project toys): each plays only while it's on screen ----
 const loopObserver = new IntersectionObserver((entries) =>
   entries.forEach((entry) => entry.target.classList.toggle("is-playing", entry.isIntersecting))
 );
@@ -83,15 +87,16 @@ document.querySelectorAll(".pond, .toy").forEach((fig) => {
   loopObserver.observe(fig);
 });
 
+// ---- Copy email button ----
 document.querySelectorAll(".copy-btn").forEach((btn) => {
   btn.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(btn.dataset.copy);
-      btn.textContent = "Copied!";
+      btn.textContent = t("Copied!");
     } catch {
-      btn.textContent = "Copy failed";
+      btn.textContent = t("Copy failed");
     }
-    setTimeout(() => (btn.textContent = "Copy"), 2000);
+    setTimeout(() => (btn.textContent = t("Copy")), 2000);
   });
 });
 
@@ -102,7 +107,7 @@ lightbox.innerHTML = '<img alt="">';
 // Announce it as a dialog and let it take focus while open
 lightbox.setAttribute("role", "dialog");
 lightbox.setAttribute("aria-modal", "true");
-lightbox.setAttribute("aria-label", "Photo viewer. Press Escape or click to close.");
+lightbox.setAttribute("aria-label", t("Photo viewer. Press Escape or click to close."));
 lightbox.tabIndex = -1;
 document.body.appendChild(lightbox);
 const lightboxImg = lightbox.querySelector("img");
@@ -136,4 +141,11 @@ document.querySelectorAll(".gallery img, .project-photo img").forEach((img) => {
 lightbox.addEventListener("click", closeLightbox);
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeLightbox();
+});
+
+// ---- Language switch: refresh the labels this file set before the language changed ----
+document.addEventListener("langchange", () => {
+  toggle.setAttribute("aria-label", t(links.classList.contains("open") ? "Close menu" : "Open menu"));
+  document.querySelectorAll(".copy-btn").forEach((btn) => (btn.textContent = t("Copy")));
+  lightbox.setAttribute("aria-label", t("Photo viewer. Press Escape or click to close."));
 });

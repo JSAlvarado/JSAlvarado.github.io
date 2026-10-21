@@ -17,8 +17,9 @@
   --max: 1100px;
   --nav-h: 64px;
 
-  --font-head: "Poppins", "Helvetica Neue", Arial, sans-serif;
-  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Hangul (Korean view) uses the system Korean font, else Noto Sans KR (loaded by lang.js); Latin keeps Poppins/Inter */
+  --font-head: "Poppins", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --dur-fast: 200ms;
@@ -61,7 +62,7 @@ strong { font-weight: 600; }
 .btn-primary:focus-visible { outline-color: var(--ink); }
 .contact .btn-primary:focus-visible { outline-color: var(--on-dark); }
 
-.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--space-2); }
+.wrap { max-width: var(--max); margin: 0 auto; padding-left: var(--space-2); padding-right: var(--space-2); }
 /* Each section gets the section space above and a clear gap below its last block */
 .section { padding-top: var(--space-section); padding-bottom: var(--space-5); }
 
@@ -96,11 +97,27 @@ strong { font-weight: 600; }
   background: var(--ink); color: var(--paper); font-size: 0.75rem; font-weight: 800;
 }
 .nav-toggle { display: block; background: none; border: 0; padding: 11px; cursor: pointer; }
+/* Language switch (added by lang.js): outlined button beside the menu on phones, after Contact on desktop */
+.lang-btn {
+  margin-left: auto; min-height: 40px; padding: 6px 12px;
+  border: 1px solid var(--ink); background: var(--paper); color: var(--ink); cursor: pointer;
+  font-family: var(--font-head); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.lang-btn:hover { background: var(--ink); color: var(--paper); }
+.lang-btn:focus-visible { outline-color: var(--ink); }
+.lang-btn:lang(ko) { letter-spacing: 0.04em; }
+/* Read by screen readers only (the language-change announcement) */
+.sr-only { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* Korean view: break lines between words, and ease letter spacing meant for Latin capitals */
+html:lang(ko) { word-break: keep-all; }
+html:lang(ko) :is(.label, .status, .when, .btn, .nav-links a, .facts dt, .contact-grid dt, .footer) { letter-spacing: 0.04em; }
 .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--ink); margin: 5px 0; }
 .nav-links {
   display: none; position: absolute; top: var(--nav-h); left: 0; right: 0;
   flex-direction: column; padding: var(--space-1) var(--space-2) var(--space-2);
   background: var(--paper); border-bottom: 1px solid var(--line);
+  max-height: calc(100vh - var(--nav-h)); overflow-y: auto; /* phones in landscape can scroll the menu */
 }
 .nav-links.open { display: flex; animation: menu-in var(--dur-fast) var(--ease); }
 @keyframes menu-in { from { opacity: 0; transform: translateY(-6px); } }
@@ -160,7 +177,7 @@ img.tone { filter: grayscale(100%); transition: filter var(--dur) var(--ease); }
 /* Intro text and drawing: stacked on phones, side by side from 960px */
 .feature-intro { display: grid; grid-template-columns: 1fr; gap: var(--space-5); align-items: center; }
 .pond { margin: 0; max-width: 560px; }
-.pond-frame { position: relative; border: 1px solid var(--on-dark); }
+.pond-frame { border: 1px solid var(--on-dark); }
 .pond-art { display: block; width: 100%; height: auto; }
 .pond figcaption {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-1);
@@ -180,13 +197,14 @@ img.tone { filter: grayscale(100%); transition: filter var(--dur) var(--ease); }
 .p-ring { fill: none; stroke: var(--on-dark); stroke-width: 1.5; }
 .p-water { fill: var(--ink); opacity: 0.88; }
 .p-fish { fill: var(--sand); opacity: 0.45; }
-.p-diffuser { fill: none; stroke: var(--on-dark); stroke-width: 4; stroke-dasharray: 4 3; }
 .p-text { fill: var(--ink); font: 700 13px "Poppins", sans-serif; letter-spacing: 0.02em; }
 
 
 /* The loop: everything waits (paused) until script.js says the drawing is on screen (pond and project toys) */
 .pond .anim, .toy .anim { animation-play-state: paused; animation-iteration-count: infinite; }
 .pond.is-playing .anim, .toy.is-playing .anim { animation-play-state: running; }
+/* Without JavaScript the drawings are plain still pictures */
+.pond:not(.is-ready) .anim, .toy:not(.is-ready) .anim { animation: none; }
 /* Moving bits only appear once the loop can run, so the still drawing has no stray dots */
 .pond:not(.is-ready) .particle, .toy:not(.is-ready) .particle { display: none; }
 .bob { animation: bob 5s ease-in-out infinite; }
@@ -224,13 +242,12 @@ img.tone { filter: grayscale(100%); transition: filter var(--dur) var(--ease); }
 }
 .p-fish--feeding { opacity: 0.7; }
 .feeder-fish { animation: nibble 2.4s ease-in-out infinite; }
-.ff2 { animation-delay: -1.2s; }
 @keyframes nibble {
   0%, 100% { transform: translate(0, 10px); }
   45% { transform: translate(6px, -14px); }
   60% { transform: translate(4px, -12px); }
 }
-.ff2 { animation-name: nibble-left; }
+.ff2 { animation-name: nibble-left; animation-delay: -1.2s; }
 @keyframes nibble-left {
   0%, 100% { transform: translate(0, 10px); }
   45% { transform: translate(-6px, -14px); }
@@ -364,6 +381,8 @@ img.tone { filter: grayscale(100%); transition: filter var(--dur) var(--ease); }
 /* The longest label gets a shorter line so it stays inside the photo */
 .callout--4::after { width: 14px; }
 .callout--4 span { left: 19px; }
+/* Where the photo is a half-width column, the longest label wraps onto two lines to stay inside it */
+@media (min-width: 960px) and (max-width: 1299px) { .callout--4 span { white-space: normal; width: 7.5em; } }
 /* On phones the photo is too small for names: only the numbers show, and the list below names each part */
 .callout em { display: none; font-style: normal; }
 .callout-list {
@@ -378,7 +397,7 @@ img.tone.in-view { filter: grayscale(0%); }
   display: inline-block; margin: 0; padding: 5px 10px; border: 1px solid var(--ink);
   font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.4;
 }
-.badge-ai { margin-top: var(--space-2); }
+.card .badge-ai { margin-top: var(--space-2); }
 
 /* ============ OTHER PROJECTS ============ */
 .mini-projects { display: grid; grid-template-columns: 1fr; column-gap: var(--space-4); }
@@ -447,15 +466,19 @@ img.tone.in-view { filter: grayscale(0%); }
   padding: 10px 14px; cursor: pointer; background: transparent; color: var(--on-dark); border: 1px solid var(--on-dark);
 }
 .contact-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-3); margin: 0; }
+/* Links in the contact details get a comfortable tap height */
+.contact-grid dd a { display: inline-block; padding: 6px 0; }
 
 /* ============ FOOTER ============ */
 .footer {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;
-  padding: var(--space-3) var(--space-2); color: var(--muted);
+  /* Extra bottom space so "Back to top" stays clear of the chat button in the corner */
+  padding: var(--space-3) var(--space-2) calc(56px + var(--space-4)); color: var(--muted);
   font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
 }
 .footer p { margin: 0; }
-.footer a { display: inline-block; padding: 11px 0; color: var(--muted); text-decoration: none; }
+/* Privacy note about the visitor counter, on its own line in sentence case */
+.footer .footer-note { flex-basis: 100%; font-weight: 400; text-transform: none; letter-spacing: 0; }.footer a { display: inline-block; padding: 11px 0; color: var(--muted); text-decoration: none; }
 .footer a:hover { color: var(--ink); }
 
 /* ============ LIGHTBOX ============ */
@@ -564,8 +587,9 @@ img.tone.in-view { filter: grayscale(0%); }
   @keyframes block-in { from { opacity: 0; transform: translateY(var(--rise-block)); } to { opacity: 1; transform: none; } }
   @keyframes title-in { from { opacity: 0; transform: translateX(calc(var(--rise-block) * -1)); } to { opacity: 1; transform: none; } }
   @keyframes photo-in {
-    from { filter: grayscale(100%); clip-path: inset(var(--wipe) 0 0 0); }
-    to { filter: grayscale(0%); clip-path: inset(0 0 0 0); }
+    /* The wipe ends 8px outside the photo, so a keyboard focus ring around it isn't clipped */
+    from { filter: grayscale(100%); clip-path: inset(var(--wipe) -8px -8px -8px); }
+    to { filter: grayscale(0%); clip-path: inset(-8px); }
   }
   .reveal, img.tone {
     transition: none;
@@ -611,11 +635,14 @@ img.tone.in-view { filter: grayscale(0%); }
   img.tone { filter: none; clip-path: none; animation: none; }
   .callout::before, .callout::after, .callout span { opacity: 1; transform: none; animation: none; }
   .pond .particle, .toy .particle { display: none !important; }
+  .pond .anim, .toy .anim { animation: none !important; }
+  /* Keep the dark bands dark on paper, so their light text stays readable */
+  .band-dark, .contact { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
 /* ============ TABLET: 640px and up ============ */
 @media (min-width: 640px) {
-  .wrap { padding: 0 var(--space-4); }
+  .wrap { padding-left: var(--space-4); padding-right: var(--space-4); }
   .facts, .contact-grid, .awards, .edu, .mini-projects, .skills, .functions, .gallery { grid-template-columns: 1fr 1fr; }
   .facts { column-gap: var(--space-4); }
 }
@@ -626,8 +653,9 @@ img.tone.in-view { filter: grayscale(0%); }
   .feature-intro .pond { justify-self: end; width: 100%; }
   :root { --space-section: 96px; }
   .nav-toggle { display: none; }
+  .lang-btn { order: 2; margin-left: var(--space-2); }
   .nav-links {
-    display: flex; position: static; flex-direction: row; gap: var(--space-2);
+    order: 1; display: flex; position: static; flex-direction: row; gap: var(--space-2); margin-left: auto;
     padding: 0; border: 0; background: none;
   }
   .nav-links a { padding: 4px 0; position: relative; font-size: 0.7rem; letter-spacing: 0.1em; }
