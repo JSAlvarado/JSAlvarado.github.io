@@ -76,14 +76,14 @@ strong { font-weight: 600; }
 
 /* Skip link: hidden until a keyboard user tabs to it */
 .skip {
-  position: absolute; left: var(--space-2); top: -60px; z-index: 30;
+  position: absolute; left: var(--space-2); top: -60px; z-index: 46;
   padding: 10px 16px; background: var(--ink); color: var(--paper); font-weight: 600; text-decoration: none;
 }
 .skip:focus { top: 12px; }
 
 /* ============ NAV: fixed bar, hamburger on mobile ============ */
 .nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 20; height: var(--nav-h);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 45; height: var(--nav-h);
   background: var(--paper); border-bottom: 1px solid var(--line);
 }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
@@ -251,6 +251,77 @@ img.tone.in-view { filter: grayscale(0%); }
 }
 .lightbox.open { visibility: visible; opacity: 1; transition: opacity var(--dur-fast) var(--ease), visibility 0s; }
 .lightbox img { max-height: 90vh; max-width: 100%; }
+
+/* ============ CHATBOT: floating round button + square chatbox (see .claude/rules/chatbot.md) ============ */
+/* Round button (approved exception to border-radius 0); chatbot.js sets --chat-x/--chat-y while dragging */
+.chat-fab {
+  position: fixed; left: 0; top: 0; z-index: 40; width: 56px; height: 56px; padding: 0;
+  display: grid; place-items: center; border-radius: 50%; border: 2px solid var(--paper);
+  background: var(--ink); color: var(--paper); cursor: grab; touch-action: none; user-select: none;
+  transform: translate3d(var(--chat-x, calc(100vw - 72px)), var(--chat-y, calc(100vh - 72px)), 0);
+  visibility: hidden;
+}
+/* The edge-snap glide is enabled only after the first placement, so the saved position appears without a jump */
+.chat-fab.is-ready { visibility: visible; transition: transform 250ms var(--ease); }
+/* While the chatbox is open the button steps aside, so it never covers the conversation */
+.chat-fab.is-active { visibility: hidden; }
+.chat-fab.is-dragging { transition: none; cursor: grabbing; }
+/* Hover and focus invert the button, so the change shows on both light and dark sections */
+.chat-fab:hover, .chat-fab:focus-visible { background: var(--paper); color: var(--ink); border-color: var(--ink); }
+.chat-fab:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+/* Chatbox panel: near full-screen on phones, a 380px panel beside the button on wider screens */
+.chat-panel {
+  position: fixed; z-index: 39; inset: calc(var(--nav-h) + var(--space-1)) var(--space-1) var(--space-1) var(--space-1);
+  display: flex; flex-direction: column; background: var(--paper); color: var(--ink); border: 1px solid var(--ink);
+  visibility: hidden; opacity: 0; transform: translateY(12px) scale(0.98); transform-origin: bottom right;
+  transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), visibility 0s linear var(--dur-fast);
+}
+.chat-panel.is-left { transform-origin: bottom left; }
+.chat-panel.is-open { visibility: visible; opacity: 1; transform: none; transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), visibility 0s; }
+.chat-panel:focus { outline: none; }
+.chat-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); padding: var(--space-2); border-bottom: 1px solid var(--line); }
+.chat-head .label { margin: 0 0 2px; }
+.chat-head h2 { font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.01em; margin: 0; }
+.chat-close { width: 44px; height: 44px; flex: none; border: 0; background: none; color: var(--ink); font-size: 1.1rem; cursor: pointer; }
+
+/* Conversation: assistant on the left, visitor on the right */
+.chat-log { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: var(--space-2); }
+.chat-msg { max-width: 88%; padding: 10px 12px; font-size: 0.92rem; line-height: 1.5; }
+.chat-msg p { margin: 0; }
+.chat-msg--bot { align-self: flex-start; border: 1px solid var(--line); border-left: 3px solid var(--ink); }
+.chat-msg--user { align-self: flex-end; background: var(--ink); color: var(--paper); }
+.chat-link { display: inline-flex; align-items: center; min-height: 44px; margin: 4px 16px 0 0; font-size: 0.85rem; font-weight: 600; }
+
+/* Suggested questions: tap targets of at least 44px */
+.chat-suggest { display: flex; flex-wrap: wrap; gap: var(--space-1); max-height: 40%; overflow-y: auto; padding: var(--space-1) var(--space-2) 12px; }
+.chat-chip {
+  min-height: 44px; padding: 8px 12px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink);
+  font: inherit; font-size: 0.84rem; line-height: 1.3; text-align: left; cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.chat-chip:hover { background: var(--ink); color: var(--paper); }
+
+/* Typed question field and privacy line */
+.chat-form { display: flex; border-top: 1px solid var(--line); }
+.chat-input { flex: 1; min-width: 0; padding: 14px var(--space-2); border: 0; background: var(--paper); color: var(--ink); font: inherit; font-size: 1rem; }
+.chat-input:focus-visible { outline-offset: -3px; }
+.chat-send {
+  padding: 0 var(--space-3); border: 0; background: var(--ink); color: var(--paper); cursor: pointer;
+  font-family: var(--font-head); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+}
+.chat-send:focus-visible { outline-color: var(--paper); outline-offset: -4px; outline-width: 3px; }
+.chat-note { margin: 0; padding: var(--space-1) var(--space-2) 12px; color: var(--muted); font-size: 0.72rem; }
+.chat-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (min-width: 640px) {
+  .chat-panel {
+    inset: auto var(--space-2) 88px auto; width: 380px;
+    height: min(600px, calc(100vh - var(--nav-h) - 120px));
+  }
+  .chat-panel.is-left { inset: auto auto 88px var(--space-2); }
+}
+@media print { .chat-fab, .chat-panel { display: none; } }
 
 /* ============ MOTION (see .claude/rules/motions.md) ============ */
 /* Hero: label, name, lead, buttons and facts rise in one after another on page load */
