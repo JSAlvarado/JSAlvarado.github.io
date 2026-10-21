@@ -368,26 +368,28 @@
   }
   const forgiving = (text) => " " + text.trim().split(" ").filter(Boolean).map(toKeyword).join(" ") + " ";
 
-  // An approved answer in one language: its text, links and follow-ups
-  const local = (e, l) => ({ a: l === "ko" ? KO[e.id].a : e.a, links: e.links, next: e.next, lang: l });
+  // An approved answer in one language: its text, links and follow-ups. make(l) rebuilds it in either language,
+  // so a language switch can redraw the whole conversation
+  const answerText = (e, l) => (l === "ko" ? KO[e.id].a : e.a);
+  const local = (e, l) => ({ a: answerText(e, l), links: e.links, next: e.next, lang: l, make: (x) => ({ a: answerText(e, x), links: e.links }) });
+  const fixed = (key) => (x) => replies(x)[key];
 
   // Decide the reply for a typed question (in Korean when the question is written in Korean, else in the page language)
   function answerFor(raw) {
     const l = HANGUL.test(raw) ? "ko" : lang();
-    const R = replies(l);
     const text = normalize(raw);
     const words = text.trim().split(" ").filter(Boolean);
-    const reply = (a, links) => ({ a, links, next: START, lang: l });
-    if (!/[a-z\uac00-\ud7a3]/.test(text) || words.length === 0) return reply(R.unclear);
-    if (starts(text, INAPPROPRIATE)) return reply(R.inappropriate);
+    const reply = (text, links) => ({ a: text(l), links, next: START, lang: l, make: (x) => ({ a: text(x), links }) });
+    if (!/[a-z\uac00-\ud7a3]/.test(text) || words.length === 0) return reply(fixed("unclear"));
+    if (starts(text, INAPPROPRIATE)) return reply(fixed("inappropriate"));
     // Private topics are also caught in plural form ("salaries", "phones")
     const singular = " " + text.trim().split(" ").map((w) => w.replace(/ies$/, "y").replace(/s$/, "")).join(" ") + " ";
-    if (starts(text, SENSITIVE) || starts(singular, SENSITIVE)) return reply(R.sensitive, [MAILTO]);
-    if (starts(text, OTHER_PERSON)) return reply(R.otherPerson, [MAILTO]);
-    if (starts(text, COMMITMENT)) return reply(R.commitment, [MAILTO]);
-    if (words.length <= 4 && starts(text, THANKS)) return reply(R.thanks, [MAILTO]);
-    if (words.length <= 4 && starts(text, GREETING) && !QA.some((e) => hits(text, keysOf(e)))) return reply(R.greeting);
-    if (starts(text, OFF_TOPIC)) return reply(R.offTopic);
+    if (starts(text, SENSITIVE) || starts(singular, SENSITIVE)) return reply(fixed("sensitive"), [MAILTO]);
+    if (starts(text, OTHER_PERSON)) return reply(fixed("otherPerson"), [MAILTO]);
+    if (starts(text, COMMITMENT)) return reply(fixed("commitment"), [MAILTO]);
+    if (words.length <= 4 && starts(text, THANKS)) return reply(fixed("thanks"), [MAILTO]);
+    if (words.length <= 4 && starts(text, GREETING) && !QA.some((e) => hits(text, keysOf(e)))) return reply(fixed("greeting"));
+    if (starts(text, OFF_TOPIC)) return reply(fixed("offTopic"));
 
     // Answers are matched on the forgiving text, so "skils", "FLOATek" and "certificates" still find their keywords
     const loose = forgiving(text);
@@ -399,9 +401,9 @@
     });
     let refer = null, referScore = 0;
     REFER.forEach((r) => { const s = hits(loose, r.keys); if (s > referScore) { refer = r; referScore = s; } });
-    if (refer && referScore > bestScore) return reply(referReply(refer, l), [MAILTO]);
+    if (refer && referScore > bestScore) return reply((x) => referReply(refer, x), [MAILTO]);
     if (best) return local(best, l);
-    return reply(R.notCovered, [MAILTO]);
+    return reply(fixed("notCovered"), [MAILTO]);
   }
 
   // ---- Build the floating button and the chatbox ----
@@ -488,11 +490,36 @@
     });
   }
 
+  // Every message so far: typed questions as typed, picked suggestions and bot replies as recipes that can be
+  // rebuilt in either language
+  const history = [];
+  function addUser(text, entry) {
+    const l = entry ? lang() : HANGUL.test(text) ? "ko" : lang();
+    history.push({ who: "user", text, entry, l });
+    return say("user", text, null, l);
+  }
+  function addBot(make, l = lang()) {
+    history.push({ who: "bot", make });
+    const r = make(l);
+    return say("bot", r.a, r.links, l);
+  }
+  // Redraw the whole conversation in the page language (after the language switch)
+  function redraw() {
+    const l = lang();
+    thread.replaceChildren();
+    history.forEach((h) => {
+      if (h.who === "user") { h.entry ? say("user", qText(h.entry, l), null, l) : say("user", h.text, null, h.l); return; }
+      const r = h.make(l);
+      say("bot", r.a, r.links, l);
+    });
+    log.scrollTop = log.scrollHeight;
+  }
+
   // Handle a question from a suggestion button or the text field
   function ask(text, entry) {
     const reply = entry ? local(entry, lang()) : answerFor(text);
-    const question = say("user", text, null, HANGUL.test(text) ? "ko" : lang());
-    say("bot", reply.a, reply.links, reply.lang);
+    const question = addUser(text, entry);
+    addBot(reply.make, reply.lang);
     showSuggestions(reply.next && reply.next.length ? reply.next : START);
     // Scroll so the new question and its answer start at the top of the conversation
     log.scrollTop += question.getBoundingClientRect().top - log.getBoundingClientRect().top - 12;
@@ -512,7 +539,7 @@
     panel.classList.toggle("is-left", fabX() < window.innerWidth / 2);
     panel.classList.add("is-open");
     // The welcome is added after the panel is visible, so screen readers announce it
-    if (!started) { say("bot", replies(lang()).welcome, null, lang()); showSuggestions(START); started = true; }
+    if (!started) { addBot((x) => ({ a: replies(x).welcome })); showSuggestions(START); started = true; }
     fab.classList.add("is-active");
     fab.setAttribute("aria-expanded", "true");
     fab.setAttribute("aria-label", UI[lang()].close);
@@ -527,8 +554,9 @@
   }
   const isOpen = () => panel.classList.contains("is-open");
   renderUI();
-  // The language switch relabels the chatbox and the current suggestions; earlier messages stay as they were
-  document.addEventListener("langchange", () => { renderUI(); if (started) showSuggestions(shown); });
+  // The language switch relabels the chatbox and redraws the conversation and suggestions in the new language
+  // (visitors' own questions stay as they typed them)
+  document.addEventListener("langchange", () => { renderUI(); if (started) { redraw(); showSuggestions(shown); } });
   panel.querySelector(".chat-close").addEventListener("click", () => close());
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && isOpen()) close(); });
   // Tapping anywhere outside the open chatbox closes it, like iPhone's AssistiveTouch
