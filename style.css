@@ -155,6 +155,135 @@ figure { margin: 0; }
 figcaption { margin-top: var(--space-1); color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
 /* Without JS photos stay in color; with JS they start gray and fill with color as they come into view */
 img.tone { filter: grayscale(100%); transition: filter var(--dur) var(--ease); }
+
+/* ============ FLOATECH POND ANIMATION: flat drawing in the charcoal band ============ */
+/* Intro text and drawing: stacked on phones, side by side from 960px */
+.feature-intro { display: grid; grid-template-columns: 1fr; gap: var(--space-5); align-items: center; }
+.pond { margin: 0; max-width: 560px; }
+.pond-frame { position: relative; border: 1px solid var(--on-dark); }
+.pond-art { display: block; width: 100%; height: auto; }
+.pond figcaption {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-1);
+  margin-top: var(--space-1); color: var(--on-dark);
+}
+.pond figcaption .label { margin: 0; }
+/* Drawing colors come from the seven tokens */
+.p-sand { fill: var(--sand); stroke: var(--ink); stroke-width: 1.5; }
+.p-silver { fill: var(--line); stroke: var(--ink); stroke-width: 1.5; }
+.p-panel { fill: var(--ink); stroke: var(--on-dark); stroke-width: 1; }
+.p-frame { fill: none; stroke: var(--on-dark); stroke-width: 2; }
+.p-thin { fill: none; stroke: var(--on-dark); stroke-width: 1; }
+.p-thin-ink { fill: none; stroke: var(--ink); stroke-width: 1; }
+.p-faint { opacity: 0.5; }
+.p-cable { fill: none; stroke: var(--on-dark); stroke-width: 1.5; }
+.p-ondark { fill: var(--on-dark); }
+.p-ring { fill: none; stroke: var(--on-dark); stroke-width: 1.5; }
+.p-water { fill: var(--ink); opacity: 0.88; }
+.p-fish { fill: var(--sand); opacity: 0.45; }
+.p-diffuser { fill: none; stroke: var(--on-dark); stroke-width: 4; stroke-dasharray: 4 3; }
+.p-text { fill: var(--ink); font: 700 13px "Poppins", sans-serif; letter-spacing: 0.02em; }
+
+
+/* The loop: everything waits (paused) until script.js says the drawing is on screen */
+.pond .anim { animation-play-state: paused; animation-iteration-count: infinite; }
+.pond.is-playing .anim { animation-play-state: running; }
+/* Moving bits only appear once the loop can run, so the still drawing has no stray dots */
+.pond:not(.is-ready) .particle { display: none; }
+.bob { animation: bob 5s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(3px); } }
+.wave1 { animation: wave-left 6s linear infinite; }
+.wave2 { animation: wave-right 9s linear infinite; }
+@keyframes wave-left { to { transform: translateX(-80px); } }
+@keyframes wave-right { from { transform: translateX(-80px); } to { transform: none; } }
+/* Feed: each pellet flies out of the feeder in an arc and drops into the water */
+.pellet-x { animation: pellet-x 2.4s linear infinite; }
+.pellet-y { animation: pellet-y 2.4s infinite; }
+.px1 { --dx: -95px; } .px2 { --dx: -45px; animation-delay: 0.6s; } .px3 { --dx: 50px; animation-delay: 1.2s; } .px4 { --dx: 100px; animation-delay: 1.8s; }
+.px2 .pellet-y { animation-delay: 0.6s; } .px3 .pellet-y { animation-delay: 1.2s; } .px4 .pellet-y { animation-delay: 1.8s; }
+@keyframes pellet-x { from { transform: none; } 70%, to { transform: translateX(var(--dx)); } }
+@keyframes pellet-y {
+  0% { transform: none; opacity: 1; animation-timing-function: ease-out; }
+  30% { transform: translateY(-26px); animation-timing-function: ease-in; }
+  70% { transform: translateY(22px); opacity: 1; }
+  71%, 100% { transform: translateY(22px); opacity: 0; }
+}
+/* Microbubbles: a fine plume that wobbles, grows a little as it rises and fades at the surface */
+.mb { transform-box: fill-box; transform-origin: center; animation: microbubble 2s ease-in infinite; }
+.mb1 { --x: 1.1px; animation-duration: 1.8s; animation-delay: -1.4s; }
+.mb2 { --x: -3.5px; animation-duration: 2.01s; animation-delay: -1.31s; }
+.mb3 { --x: 1.4px; animation-duration: 1.67s; animation-delay: -0.49s; }
+.mb4 { --x: 0.7px; animation-duration: 2.07s; animation-delay: -0.75s; }
+.mb5 { --x: 2.4px; animation-duration: 2.1s; animation-delay: -0.72s; }
+.mb6 { --x: 0.6px; animation-duration: 2.37s; animation-delay: -0.59s; }
+.mb7 { --x: 1.8px; animation-duration: 2.18s; animation-delay: -2.1s; }
+.mb8 { --x: -3.1px; animation-duration: 1.92s; animation-delay: -2.35s; }
+.mb9 { --x: -2.8px; animation-duration: 2.06s; animation-delay: -1.82s; }
+.mb10 { --x: 1.3px; animation-duration: 2.14s; animation-delay: -0.09s; }
+.mb11 { --x: 3.0px; animation-duration: 2.44s; animation-delay: -1.38s; }
+.mb12 { --x: 0.8px; animation-duration: 1.95s; animation-delay: -1.67s; }
+.mb13 { --x: 2.7px; animation-duration: 2.24s; animation-delay: -1.09s; }
+.mb14 { --x: 1.3px; animation-duration: 2.64s; animation-delay: -1.14s; }
+@keyframes microbubble {
+  0% { transform: translate(0, 0) scale(0.6); opacity: 0; }
+  10% { opacity: 0.9; }
+  40% { transform: translate(var(--x), -20px) scale(0.9); }
+  70% { transform: translate(calc(var(--x) * -0.5), -38px) scale(1.1); opacity: 0.8; }
+  100% { transform: translate(var(--x), -54px) scale(1.3); opacity: 0; }
+}
+/* Surface fizz above the diffuser */
+.boil { transform-box: fill-box; transform-origin: center; animation: boil 1.6s ease-out infinite; }
+.boil2 { animation-delay: -0.8s; }
+@keyframes boil { from { transform: scaleX(1); opacity: 0.8; } to { transform: scaleX(3); opacity: 0; } }
+/* Sensor: a ring spreads from the probe */
+.pulse { transform-box: fill-box; transform-origin: center; animation: pulse 2.4s ease-out infinite; }
+@keyframes pulse { from { transform: scale(1); opacity: 0.9; } to { transform: scale(4); opacity: 0; } }
+/* GSM: signal arcs light up outward from the antenna */
+.signal { animation: signal 1.8s ease-in-out infinite; opacity: 0; }
+.s2 { animation-delay: 0.3s; } .s3 { animation-delay: 0.6s; }
+@keyframes signal { 30% { opacity: 1; } 60%, 100% { opacity: 0; } }
+/* Fish drift slowly across the pond */
+.fish1 { animation: fish 22s linear infinite; }
+.fish2 { animation: fish 30s linear infinite; animation-delay: -14s; }
+@keyframes fish { from { transform: translateX(920px); } to { transform: none; } }
+
+/* ============ FLOATECH CALLOUTS: numbered labels on the pond photo ============ */
+/* The photo keeps its own shape here (no crop), so the percentage positions land on the right parts */
+.annotated { position: relative; }
+.project-photo .annotated img { aspect-ratio: 1400 / 787; }
+.callouts { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; pointer-events: none; }
+/* Each callout is a point on the part: a small square marker, a 1px leader line and a label */
+.callout { position: absolute; width: 0; height: 0; }
+.callout::before {
+  content: ""; position: absolute; left: -5px; top: -5px; width: 10px; height: 10px;
+  background: var(--paper); border: 1px solid var(--ink);
+}
+.callout::after {
+  content: ""; position: absolute; top: 0; width: 28px; height: 1px; background: var(--paper);
+  transform-origin: left center;
+}
+.callout span {
+  position: absolute; top: -12px; padding: 4px 6px; white-space: nowrap;
+  background: var(--paper); color: var(--ink); border: 1px solid var(--ink);
+  font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.04em; line-height: 1.2;
+}
+.callout--right::after { left: 5px; }
+.callout--right span { left: 33px; }
+.callout--left::after { right: 5px; transform-origin: right center; }
+.callout--left span { right: 33px; }
+/* Positions on floatech-photo.jpg (1400 × 787) */
+.callout--1 { left: 55%; top: 55%; }  /* feeder: the silver feed thrower below the blue box */
+.callout--2 { left: 63%; top: 29%; }  /* GSM module: top of the blue box */
+.callout--3 { left: 51.5%; top: 87.5%; }  /* sensor probe hanging at the front */
+.callout--4 { left: 62.5%; top: 82.5%; }  /* bubbles from the diffuser under the frame */
+/* The longest label gets a shorter line so it stays inside the photo */
+.callout--4::after { width: 14px; }
+.callout--4 span { left: 19px; }
+/* On phones the photo is too small for names: only the numbers show, and the list below names each part */
+.callout em { display: none; font-style: normal; }
+.callout-list {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px var(--space-2); margin: var(--space-1) 0 0; padding: 0;
+  list-style: none; font-size: 0.8125rem; font-weight: 600;
+}
 img.tone.in-view { filter: grayscale(0%); }
 
 /* ============ TAG CHIPS: outlined, square, uppercase; no skill levels ============ */
@@ -318,6 +447,9 @@ img.tone.in-view { filter: grayscale(0%); }
 .chat-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 @media (min-width: 640px) {
+  /* Names fit on the photo from 640px, so the list below is kept for screen readers only */
+  .callout em { display: inline; }
+  .callout-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .chat-panel {
     inset: auto var(--space-2) 88px auto; width: 380px;
     height: min(600px, calc(100vh - var(--nav-h) - 120px));
@@ -360,12 +492,39 @@ img.tone.in-view { filter: grayscale(0%); }
   .section-head.reveal { transform: none; animation-name: title-in; }
   /* Photos uncover from the bottom up and fill with color until they're near the middle */
   img.tone { animation-name: photo-in; animation-range: entry 0% cover 45%; }
+  /* Callouts draw in one after another as the photo moves up: the line grows, then the label fades in */
+  @keyframes line-in { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes label-in { from { opacity: 0; } to { opacity: 1; } }
+  .annotated { view-timeline-name: --callouts; }
+  .annotated img.tone ~ .callouts .callout::before,
+  .annotated img.tone ~ .callouts .callout::after,
+  .annotated img.tone ~ .callouts .callout span {
+    animation-timing-function: linear; animation-fill-mode: both;
+    animation-duration: 1ms; animation-duration: auto;
+    animation-timeline: --callouts;
+  }
+  .annotated img.tone ~ .callouts .callout::before { animation-name: label-in; }
+  .annotated img.tone ~ .callouts .callout::after { animation-name: line-in; }
+  .annotated img.tone ~ .callouts .callout span { animation-name: label-in; }
+  .callout--1::before, .callout--1::after, .callout--1 span { animation-range: cover 25% cover 35%; }
+  .callout--2::before, .callout--2::after, .callout--2 span { animation-range: cover 30% cover 40%; }
+  .callout--3::before, .callout--3::after, .callout--3 span { animation-range: cover 35% cover 45%; }
+  .callout--4::before, .callout--4::after, .callout--4 span { animation-range: cover 40% cover 50%; }
+}
+/* Browsers without scroll-linked motion: the callouts fade in together once the photo is in view */
+@supports not (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .annotated img.tone ~ .callouts .callout { opacity: 0; transition: opacity var(--dur-slow) var(--ease); }
+    .annotated img.tone.in-view ~ .callouts .callout { opacity: 1; }
+  }
 }
 
 /* Printing shows everything in its final state, in color */
 @media print {
   .reveal { opacity: 1; transform: none; animation: none; }
   img.tone { filter: none; clip-path: none; animation: none; }
+  .callout::before, .callout::after, .callout span { opacity: 1; transform: none; animation: none; }
+  .pond .particle { display: none !important; }
 }
 
 /* ============ TABLET: 640px and up ============ */
@@ -377,6 +536,8 @@ img.tone.in-view { filter: grayscale(0%); }
 
 /* ============ DESKTOP: 960px and up ============ */
 @media (min-width: 960px) {
+  .feature-intro { grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+  .feature-intro .pond { justify-self: end; width: 100%; }
   :root { --space-section: 96px; }
   .nav-toggle { display: none; }
   .nav-links {
@@ -417,4 +578,6 @@ img.tone.in-view { filter: grayscale(0%); }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .reveal, .section-head.reveal { opacity: 1; transform: none; }
   img.tone { filter: none; clip-path: none; }
+  /* The pond drawing stays still: no moving feed, bubbles or signals, and no pause button */
+  .pond .particle { display: none !important; }
 }

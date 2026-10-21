@@ -35,7 +35,7 @@ sections.forEach((s) => navObserver.observe(s));
 // Browsers with scroll-linked CSS animation do the motion in CSS; the observers below are only the fallback
 const scrollLinked = window.CSS && CSS.supports("animation-timeline: view()");
 const revealTargets = document.querySelectorAll([
-  ".section-head", ".about > p", "#floatech .lede", ".functions > li", ".project",
+  ".section-head", ".about > p", "#floatech .lede", ".pond", ".functions > li", ".project",
   ".feature-body > .gallery > figure", ".mini-projects > .card", ".skills > div", ".job",
   ".awards > .award", "#awards .gallery > figure", ".edu > .card", ".training",
   "#roadmap > .lede", ".roadmap > li", ".contact > div"
@@ -74,6 +74,13 @@ document.querySelectorAll(".gallery img, .project-photo img").forEach((img) => {
 });
 
 // ---- Copy email button ----
+// FLOATech pond animation: loops only while it's on screen
+const pond = document.querySelector(".pond");
+if (pond) {
+  pond.classList.add("is-ready");
+  new IntersectionObserver(([entry]) => pond.classList.toggle("is-playing", entry.isIntersecting)).observe(pond);
+}
+
 document.querySelectorAll(".copy-btn").forEach((btn) => {
   btn.addEventListener("click", async () => {
     try {
