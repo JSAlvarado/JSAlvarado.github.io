@@ -148,7 +148,12 @@ h1 { font-size: clamp(2.4rem, 9vw, 6rem); margin-bottom: var(--space-3); }
 .facts dd, .contact-grid dd { margin: 4px 0 0; font-weight: 500; overflow-wrap: anywhere; }
 
 /* ============ ABOUT ============ */
-.about p { max-width: 70ch; }
+.about p {
+  max-width: 70ch;
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: 400;
+}
 
 /* ============ FLOATECH: charcoal intro band with three function cards, then details ============ */
 .band-dark { background: var(--charcoal); color: var(--on-dark); padding: var(--space-section) 0 var(--space-5); }
