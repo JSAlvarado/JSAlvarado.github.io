@@ -14,6 +14,13 @@
   --space-4: 32px;
   --space-5: 48px;
   --space-section: 64px;
+
+  /* Type scale: one size per text role */
+  --fs-lede: 1.1rem;
+  --fs-card: 1.25rem;
+  --fs-small: 0.88rem;
+  --fs-caption: 0.82rem;
+  --fs-label: 0.72rem;
   --max: 1100px;
   --nav-h: 64px;
 
@@ -50,13 +57,13 @@ a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; 
 h1, h2, h3 { font-family: var(--font-head); color: inherit; margin: 0 0 var(--space-2); }
 h1, h2 { font-weight: 800; line-height: 1.0; letter-spacing: -0.02em; }
 h2 { font-size: clamp(2.5rem, 7vw, 5.5rem); margin: 0; overflow-wrap: break-word; }
-h3 { font-size: 1.15rem; font-weight: 700; line-height: 1.25; }
+h3 { font-size: var(--fs-card); font-weight: 700; line-height: 1.25; }
 p { margin: 0 0 var(--space-2); }
 ul, ol { padding-left: 1.2em; margin: 0 0 var(--space-2); }
 li { margin-bottom: 6px; }
 strong { font-weight: 600; }
 .muted { color: var(--muted); }
-.small { font-size: 0.88rem; }
+.small { font-size: var(--fs-small); }
 :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 /* Filled buttons: ring in the page color, so it shows against the page, not the button */
 .btn-primary:focus-visible { outline-color: var(--ink); }
@@ -70,10 +77,10 @@ strong { font-weight: 600; }
 .section-head { margin-bottom: var(--space-5); }
 .label, .when, .facts dt, .contact-grid dt {
   margin: 0 0 var(--space-1); color: var(--muted);
-  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
+  font-size: var(--fs-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
 }
 .section-head .label { margin-bottom: var(--space-2); }
-.lede { font-size: 1.1rem; max-width: 62ch; }
+.lede { font-size: var(--fs-lede); max-width: 62ch; }
 
 /* Skip link: hidden until a keyboard user tabs to it */
 .skip {
@@ -140,27 +147,21 @@ html:lang(ko) :is(.label, .status, .when, .btn, .nav-links a, .facts dt, .contac
 
 /* ============ HERO ============ */
 .hero { padding-top: var(--space-5); padding-bottom: var(--space-5); }
-.status { margin: 0 0 var(--space-3); color: var(--muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; }
+.status { margin: 0 0 var(--space-3); color: var(--muted); font-size: var(--fs-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; }
 h1 { font-size: clamp(2.4rem, 9vw, 6rem); margin-bottom: var(--space-3); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: var(--space-4) 0 var(--space-5); }
 .facts { display: grid; grid-template-columns: 1fr; margin: 0; border-top: 1px solid var(--ink); }
 .facts div { padding: var(--space-2) 0; border-bottom: 1px solid var(--line); }
 .facts dd, .contact-grid dd { margin: 4px 0 0; font-weight: 500; overflow-wrap: anywhere; }
 
-/* ============ ABOUT ============ */
-.about p {
-  max-width: 70ch;
-  font-size: 18px;
-  line-height: 1.7;
-  font-weight: 400;
-}
+/* ============ ABOUT: body paragraphs use the same body size as the rest of the page ============ */
+.about > p:not(.lede) { max-width: 70ch; }
 
 /* ============ FLOATECH: charcoal intro band with three function cards, then details ============ */
 .band-dark { background: var(--charcoal); color: var(--on-dark); padding: var(--space-section) 0 var(--space-5); }
 .band-dark .label { color: var(--on-dark); }
 .functions { list-style: none; padding: 0; margin: var(--space-5) 0 0; display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
 .functions > li { margin: 0; padding-top: var(--space-3); border-top: 1px solid var(--on-dark); }
-.functions h3 { font-size: 1.35rem; }
 .functions p:last-child { margin: 0; }
 .feature-body { padding-top: var(--space-5); }
 .project { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
@@ -174,7 +175,7 @@ figure { margin: 0; }
 .job .gallery { margin-top: var(--space-3); }
 .gallery img, .project-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; cursor: zoom-in; }
 .gallery-2 img, .project-photo img { aspect-ratio: 4 / 3; }
-figcaption { margin-top: var(--space-1); color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
+figcaption { margin-top: var(--space-1); color: var(--muted); font-size: var(--fs-caption); line-height: 1.5; }
 /* Without JS photos stay in color; with JS they start gray and fill with color as they come into view */
 img.tone { filter: grayscale(100%); transition: filter var(--dur) var(--ease); }
 
@@ -400,7 +401,7 @@ img.tone.in-view { filter: grayscale(0%); }
 .chips { list-style: none; padding: 0; margin: var(--space-3) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-1); }
 .chips li, .badge-ai {
   display: inline-block; margin: 0; padding: 5px 10px; border: 1px solid var(--ink);
-  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.4;
+  font-size: var(--fs-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.4;
 }
 .card .badge-ai { margin-top: var(--space-2); }
 
@@ -408,6 +409,7 @@ img.tone.in-view { filter: grayscale(0%); }
 .mini-projects { display: grid; grid-template-columns: 1fr; column-gap: var(--space-4); }
 .card { padding: var(--space-3) 0; border-top: 1px solid var(--line); }
 .card p { margin: 0 0 4px; }
+.card .label { margin-bottom: var(--space-1); }
 .mini-projects .card > p:not(.badge-ai) { color: var(--muted); }
 
 /* ============ SKILLS ============ */
@@ -417,8 +419,8 @@ img.tone.in-view { filter: grayscale(0%); }
 
 /* ============ EXPERIENCE ============ */
 .job { padding: var(--space-4) 0; border-top: 1px solid var(--line); }
-.year { margin: 0 0 var(--space-1); font-family: var(--font-head); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; }
-.org { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--muted); font-size: 0.92rem; }
+.year { margin: 0 0 var(--space-1); font-family: var(--font-head); font-size: var(--fs-label); font-weight: 700; letter-spacing: 0.12em; }
+.org { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--muted); font-size: var(--fs-small); }
 .logo { height: 26px; width: auto; }
 
 /* ============ AWARDS: sand band; only --ink text on sand (contrast) ============ */
@@ -427,7 +429,7 @@ img.tone.in-view { filter: grayscale(0%); }
 .awards { display: grid; grid-template-columns: 1fr; gap: var(--space-2); }
 .award { padding: var(--space-3); background: var(--paper); }
 .award p:last-child { margin: 0; }
-.award-title { margin: 0 0 4px; font-family: var(--font-head); font-size: 1.25rem; font-weight: 700; }
+.award-title { margin: 0 0 4px; font-family: var(--font-head); font-size: var(--fs-card); font-weight: 700; line-height: 1.25; }
 
 /* ============ EDUCATION ============ */
 .edu { display: grid; grid-template-columns: 1fr; column-gap: var(--space-4); }
@@ -446,13 +448,13 @@ img.tone.in-view { filter: grayscale(0%); }
   content: ""; position: absolute; top: 4px; left: calc(var(--space-4) * -1 - 8px);
   width: 14px; height: 14px; background: var(--paper); border: 2px solid var(--ink);
 }
-.roadmap .when { color: var(--ink); font-size: 0.8rem; }
+.roadmap .when { color: var(--ink); }
 .roadmap ul { margin-bottom: 0; }
 
 /* ============ CONTACT: charcoal block ============ */
 .contact {
   display: grid; grid-template-columns: 1fr; gap: var(--space-4);
-  margin-top: var(--space-section); padding: var(--space-5) var(--space-2);
+  margin-top: var(--space-section); padding: var(--space-section) var(--space-2) var(--space-5);
   background: var(--charcoal); color: var(--on-dark);
 }
 .contact > div { width: 100%; max-width: var(--max); margin: 0 auto; }
@@ -479,7 +481,7 @@ img.tone.in-view { filter: grayscale(0%); }
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;
   /* Extra bottom space so "Back to top" stays clear of the chat button in the corner */
   padding: var(--space-3) var(--space-2) calc(56px + var(--space-4)); color: var(--muted);
-  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
+  font-size: var(--fs-label); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
 }
 .footer p { margin: 0; }
 /* Privacy note about the visitor counter, on its own line in sentence case */
@@ -648,7 +650,9 @@ img.tone.in-view { filter: grayscale(0%); }
 /* ============ TABLET: 640px and up ============ */
 @media (min-width: 640px) {
   .wrap { padding-left: var(--space-4); padding-right: var(--space-4); }
-  .facts, .contact-grid, .awards, .edu, .mini-projects, .skills, .functions, .gallery { grid-template-columns: 1fr 1fr; }
+  /* The three-photo FLOATech gallery goes straight to three across, so no photo is left alone on a row */
+  .gallery { grid-template-columns: repeat(3, 1fr); }
+  .facts, .contact-grid, .awards, .edu, .mini-projects, .skills, .functions, .gallery-4, .gallery-2 { grid-template-columns: 1fr 1fr; }
   .facts { column-gap: var(--space-4); }
 }
 
@@ -685,7 +689,7 @@ img.tone.in-view { filter: grayscale(0%); }
   }
   .roadmap > li { padding-bottom: 0; }
   .roadmap > li::before { top: calc(var(--space-4) * -1 - 8px); left: 0; }
-  .contact { grid-template-columns: 1fr 1fr; padding: var(--space-section) var(--space-4); }
+  .contact { grid-template-columns: 1fr 1fr; padding: var(--space-section) var(--space-4) var(--space-5); }
   .contact > div { max-width: calc(var(--max) / 2); }
   .contact > div:first-child { margin-right: 0; }
   .contact > div:last-child { margin-left: 0; }
