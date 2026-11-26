@@ -355,6 +355,38 @@ img.tone { filter: grayscale(100%); transition: filter var(--dur) var(--ease); }
 @keyframes type3 { 0%, 26% { transform: scaleX(0); } 38%, 88% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
 @keyframes type4 { 0%, 38% { transform: scaleX(0); } 52%, 88% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
 
+/* IoT Playground: the needle swings, the signal dashes flow, bubbles rise from the device */
+.needle { transform-box: fill-box; transform-origin: 50% 100%; animation: needle 3.6s ease-in-out infinite; }
+@keyframes needle { 0%, 100% { transform: rotate(-55deg); } 50% { transform: rotate(55deg); } }
+.flow { animation: flow 0.8s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -14; } }
+.bub { animation: bubble 2.4s ease-out infinite; opacity: 0; }
+.b2 { animation-delay: 0.8s; } .b3 { animation-delay: 1.6s; }
+@keyframes bubble { 0% { transform: translateY(6px); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateY(-22px); opacity: 0; } }
+/* Malhae: the two speech bubbles take turns, the email bobs and the sun pulses */
+.say { transform-box: fill-box; transform-origin: center; animation: say 3.2s ease-in-out infinite; }
+.say-b { animation-delay: -1.6s; }
+@keyframes say { 0%, 100% { transform: scale(0.88); opacity: 0.35; } 20%, 60% { transform: scale(1); opacity: 1; } }
+.mail { animation: mail 2.4s ease-in-out infinite; }
+@keyframes mail { 50% { transform: translateY(3px); } }
+.sun { transform-box: fill-box; transform-origin: center; animation: sun 2s ease-in-out infinite; }
+@keyframes sun { 50% { transform: scale(1.2); } }
+/* C# game: the ground and the block slide left at the same speed while the hero hops over the block */
+.run-ground { animation: ground 0.224s linear infinite; }
+.block { animation: block 2.4s linear infinite; }
+@keyframes block { to { transform: translateX(-150px); } }
+.hop { animation: hop 2.4s ease-in-out infinite; }
+@keyframes hop { 0%, 44%, 86%, 100% { transform: none; } 54%, 76% { transform: translateY(-26px); } }
+.coin { transform-box: fill-box; transform-origin: center; animation: coin 1.4s linear infinite; }
+@keyframes coin { 50% { transform: scaleX(0.2); } }
+/* Database system in Java: a record leaves the database and a highlight steps down the table rows */
+.scan { animation: scan 4s steps(1) infinite; }
+@keyframes scan { 0%, 24% { transform: none; } 25%, 49% { transform: translateY(12px); } 50%, 74% { transform: translateY(24px); } 75%, 99% { transform: translateY(36px); } }
+.packet { animation: packet 2s ease-out infinite; opacity: 0; }
+@keyframes packet { 0% { transform: translateX(-2px); opacity: 0; } 20% { opacity: 1; } 70%, 100% { transform: translateX(10px); opacity: 0; } }
+/* The link line on a project card */
+.mini-projects .card > p.card-link { color: var(--ink); font-weight: 600; margin-top: var(--space-1); }
+
 /* ============ FLOATECH CALLOUTS: numbered labels on the pond photo ============ */
 /* The photo keeps its own shape here (no crop), so the percentage positions land on the right parts */
 .annotated { position: relative; }

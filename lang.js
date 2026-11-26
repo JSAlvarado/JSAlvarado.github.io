@@ -112,6 +112,14 @@
     "This website": "이 웹사이트",
     "John’s portfolio site, built with HTML, CSS and JavaScript and hosted on GitHub Pages.": "HTML, CSS, JavaScript로 제작하고 GitHub Pages에 호스팅한 John의 포트폴리오 사이트입니다.",
     "Built with Claude Code": "Claude Code로 제작",
+    "Interactive browser games that teach how sensors and automation work: watch live readings, write rules and see them as Arduino code.":
+      "센서와 자동화의 원리를 가르치는 인터랙티브 브라우저 게임입니다. 실시간 측정값을 보고, 규칙을 작성하고, 아두이노 코드로 확인할 수 있습니다.",
+    "Play IoT Playground": "IoT Playground 플레이하기",
+    "A Korean translation and conversation app, with an automation that emails the day’s weather forecast and a Korean phrase.":
+      "한국어 번역·회화 앱입니다. 그날의 일기예보와 한국어 문구를 이메일로 보내 주는 자동화가 포함되어 있습니다.",
+    "Open Malhae": "Malhae 열기",
+    "A game built in C#.": "C#으로 만든 게임입니다.",
+    "A database system built in Java for recording barangay blotter entries.": "바랑가이 블로터 기록을 위해 Java로 만든 데이터베이스 시스템입니다.",
 
     // 04 Skills
     "04. Skills": "04. 기술",
